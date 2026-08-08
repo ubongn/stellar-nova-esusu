@@ -1,0 +1,24 @@
+[workspace]
+members = ["shared", "member_manager", "savings_pool"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
+soroban-sdk = "22.0.7"
+shared = { path = "shared", version = "0.1.0" }
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+panic = "abort"
+lto = true
+
+[profile.release-with-logs]
+inherits = "release"
+debug-assertions = true
