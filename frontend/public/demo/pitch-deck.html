@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Esusu — Pitch Deck</title>
+    <style>
+      :root {
+        --brand: #1f57eb;
+        --brand-dark: #142155;
+        --ink: #0f172a;
+        --muted: #64748b;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: #0f172a;
+        color: #fff;
+        overflow: hidden;
+        height: 100vh;
+      }
+      .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+      .slide {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        padding: 6vh 8vw; text-align: center;
+        opacity: 0; transform: translateX(40px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .slide.active { opacity: 1; transform: translateX(0); }
+      .slide .badge {
+        font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+        color: #93c5fd; margin-bottom: 1.2rem;
+      }
+      .slide h1 { font-size: clamp(2rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.05; margin-bottom: 1.2rem; }
+      .slide h2 { font-size: clamp(1.6rem, 4.5vw, 3rem); font-weight: 700; margin-bottom: 1rem; color: #f8fafc; }
+      .slide p { font-size: clamp(1rem, 2vw, 1.4rem); color: #cbd5e1; max-width: 60ch; line-height: 1.6; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; width: 100%; max-width: 900px; }
+      .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 1.6rem; text-align: left; }
+      .card .num { font-size: 2.2rem; font-weight: 800; color: var(--brand); }
+      .card h3 { font-size: 1.1rem; font-weight: 600; margin-top: 0.4rem; }
+      .card p { font-size: 0.95rem; color: #94a3b8; margin-top: 0.4rem; }
+      .accent { color: #60a5fa; }
+      .logo { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.4rem; margin-bottom: 1.5rem; }
+      .logo span { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 0.7rem; background: var(--brand); }
+      .progress { position: fixed; bottom: 2.5vh; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; }
+      .dot { width: 8px; height: 8px; border-radius: 9999px; background: rgba(255,255,255,0.25); transition: all 0.3s; }
+      .dot.active { background: var(--brand); width: 28px; }
+      .counter { position: fixed; top: 2.5vh; right: 3vw; font-size: 0.85rem; color: #64748b; font-variant-numeric: tabular-nums; }
+      .arch { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+      .node { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 0.8rem; padding: 1rem 1.4rem; font-size: 0.95rem; }
+      .node b { color: #93c5fd; }
+      .arrow { color: #475569; font-size: 1.5rem; }
+      .timeline { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center; }
+      .phase { text-align: left; border-left: 3px solid var(--brand); padding-left: 1rem; max-width: 200px; }
+      .phase .q { font-size: 0.8rem; color: #60a5fa; font-weight: 600; }
+      .phase .t { font-weight: 600; margin-top: 0.2rem; }
+      .phase .d { font-size: 0.85rem; color: #94a3b8; margin-top: 0.3rem; }
+    </style>
+  </head>
+  <body>
+    <div class="deck" id="deck">
+      <!-- 1. Title -->
+      <section class="slide active" data-slide="0">
+        <div class="logo"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#fff"/></svg></span> Nova Esusu</div>
+        <div class="badge">Trustless Rotating Savings</div>
+        <h1>The $1T informal<br/>savings economy,<br/><span class="accent">on-chain.</span></h1>
+        <p>Transparent escrow. On-chain reputation. Zero intermediaries. Powered by Stellar Soroban.</p>
+      </section>
+
+      <!-- 2. Problem -->
+      <section class="slide" data-slide="1">
+        <div class="badge">The Problem</div>
+        <h2>Rotating savings work,<br/>but trust breaks them.</h2>
+        <div class="grid">
+          <div class="card"><div class="num">2.5B</div><h3>Unbanked</h3><p>Rely on informal ROSCAs (Esusu, Chit Fund, Tanda) for credit & savings.</p></div>
+          <div class="card"><div class="num">100%</div><h3>Trust-based</h3><p>One organizer holds the pot. Default, fraud, and disputes are common.</p></div>
+          <div class="card"><div class="num">0</div><h3>Recourse</h3><p>No transparency. No audit trail. No way to verify who paid or received.</p></div>
+        </div>
+      </section>
+
+      <!-- 3. Solution -->
+      <section class="slide" data-slide="2">
+        <div class="badge">The Solution</div>
+        <h2>Smart contracts<br/>replace the organizer.</h2>
+        <div class="grid">
+          <div class="card"><h3>Trustless escrow</h3><p>Funds lock in a Soroban contract. Payouts are automatic — no human custody.</p></div>
+          <div class="card"><h3>Transparent rotation</h3><p>Every contribution and payout is on-chain. Anyone can audit a circle.</p></div>
+          <div class="card"><h3>Portable reputation</h3><p>Complete circles, build score. Default, lose standing — visible to everyone.</p></div>
+        </div>
+      </section>
+
+      <!-- 4. Market -->
+      <section class="slide" data-slide="3">
+        <div class="badge">Market</div>
+        <h2>A massive, underserved<br/>global habit.</h2>
+        <div class="grid">
+          <div class="card"><div class="num">1B+</div><h3>Participants</h3><p>Worldwide ROSCA participation across Africa, Asia, and Latin America.</p></div>
+          <div class="card"><div class="num">$1T</div><h3>Annual rotation</h3><p>Estimated capital flowing through informal savings groups each year.</p></div>
+          <div class="card"><div class="num">70%</div><h3>Of unbanked</h3><p>Use community savings before they ever touch a bank.</p></div>
+        </div>
+      </section>
+
+      <!-- 5. Architecture -->
+      <section class="slide" data-slide="4">
+        <div class="badge">Architecture</div>
+        <h2>Two contracts.<br/>Cross-chain trust.</h2>
+        <div class="arch">
+          <div class="node"><b>React + Vite</b><br/><span style="color:#94a3b8;font-size:0.85rem">Web dApp</span></div>
+          <span class="arrow">→</span>
+          <div class="node"><b>SavingsPool</b><br/><span style="color:#94a3b8;font-size:0.85rem">Escrow & rotation</span></div>
+          <span class="arrow">↔</span>
+          <div class="node"><b>MemberManager</b><br/><span style="color:#94a3b8;font-size:0.85rem">Reputation</span></div>
+          <span class="arrow">→</span>
+          <div class="node"><b>Stellar Testnet</b><br/><span style="color:#94a3b8;font-size:0.85rem">Soroban</span></div>
+        </div>
+        <p style="margin-top:2rem">SavingsPool holds escrow and processes payouts. It cross-calls MemberManager to register members and update reputation — defaults are penalized automatically.</p>
+      </section>
+
+      <!-- 6. How it works -->
+      <section class="slide" data-slide="5">
+        <div class="badge">How It Works</div>
+        <h2>Five steps, fully on-chain.</h2>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px,1fr))">
+          <div class="card"><div class="num">1</div><h3>Create</h3><p>Set size, amount, rounds.</p></div>
+          <div class="card"><div class="num">2</div><h3>Join</h3><p>Reputation check gates entry.</p></div>
+          <div class="card"><div class="num">3</div><h3>Contribute</h3><p>XLM locks in escrow.</p></div>
+          <div class="card"><div class="num">4</div><h3>Payout</h3><p>Recipient gets the pot.</p></div>
+          <div class="card"><div class="num">5</div><h3>Rotate</h3><p>Next round begins.</p></div>
+        </div>
+      </section>
+
+      <!-- 7. Roadmap -->
+      <section class="slide" data-slide="6">
+        <div class="badge">Roadmap</div>
+        <h2>From testnet<br/>to global access.</h2>
+        <div class="timeline">
+          <div class="phase"><div class="q">NOW</div><div class="t">Testnet MVP</div><div class="d">Two contracts live, React dApp, wallet integration.</div></div>
+          <div class="phase"><div class="q">Q4 2026</div><div class="t">Mainnet</div><div class="d">Production launch, mobile wallet support, USDC pools.</div></div>
+          <div class="phase"><div class="q">Q1 2027</div><div class="t">Reputation graph</div><div class="d">Score portability, staking, default insurance.</div></div>
+          <div class="phase"><div class="q">Q2 2027</div><div class="t">Mobile app</div><div class="d">Native iOS/Android with push notifications.</div></div>
+        </div>
+      </section>
+
+      <!-- 8. Closing -->
+      <section class="slide" data-slide="7">
+        <div class="badge">Let's build</div>
+        <h1>Save together.<br/><span class="accent">Trust no one.</span><br/>Trust the chain.</h1>
+        <p style="margin-top:1.5rem">Nova Esusu — powered by Stellar Soroban.</p>
+        <div style="margin-top:2.5rem; display:inline-flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+          <span class="node"><b>Live demo</b></span>
+          <span class="node"><b>GitHub</b></span>
+          <span class="node"><b>Contact</b></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="counter" id="counter">1 / 8</div>
+    <div class="progress" id="progress"></div>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const counter = document.getElementById("counter");
+      const progress = document.getElementById("progress");
+      const AUTO_MS = 6000;
+      let current = 0;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (i === 0 ? " active" : "");
+        dot.addEventListener("click", () => go(i));
+        progress.appendChild(dot);
+      });
+
+      function go(n) {
+        slides[current].classList.remove("active");
+        progress.children[current].classList.remove("active");
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add("active");
+        progress.children[current].classList.add("active");
+        counter.textContent = (current + 1) + " / " + slides.length;
+      }
+
+      function next() { go(current + 1); }
+
+      let timer = setInterval(next, AUTO_MS);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") { clearInterval(timer); go(current + 1); timer = setInterval(next, AUTO_MS); }
+        if (e.key === "ArrowLeft") { clearInterval(timer); go(current - 1); timer = setInterval(next, AUTO_MS); }
+      });
+    </script>
+  </body>
+</html>
