@@ -3,10 +3,13 @@
 // getAddress(), signTransaction(), setWallet(), disconnect().
 // Supports Freighter, Albedo, and xBull via the kit's modal picker.
 
-import { StellarWalletsKit, Networks, FREIGHTER_ID } from "@creit.tech/stellar-wallets-kit";
-import { FreighterModule } from "@creit.tech/stellar-wallets-kit/modules/freighter";
+import { StellarWalletsKit, Networks } from "@creit.tech/stellar-wallets-kit";
+import { FreighterModule, FREIGHTER_ID } from "@creit.tech/stellar-wallets-kit/modules/freighter";
 import { AlbedoModule } from "@creit.tech/stellar-wallets-kit/modules/albedo";
 import { xBullModule } from "@creit.tech/stellar-wallets-kit/modules/xbull";
+import { classifyError } from "./errors";
+import type { ClassifiedError } from "./types";
+export { classifyError };
 
 let initialised = false;
 
@@ -65,6 +68,12 @@ export async function signTxn(xdr: string, publicKey?: string): Promise<string> 
   });
   return signedTxXdr;
 }
+
+/** Alias used by contract.ts */
+export { signTxn as signTxXdr };
+
+/** Alias used by WalletContext */
+export { tryGetAddress as getConnectedAddress };
 
 /** Forget the connected wallet. */
 export async function disconnectWallet(): Promise<void> {
