@@ -71,18 +71,6 @@ Every member starts with a reputation score of 100. Contributing on time increas
 - Identity: `ubongdeployer4`
 - Address: `GCW5Q5X2KOZRUUT2A6V54SIHLPKA3BD3HGXEGKSRI6E5EGPPT4EVIUJY`
 
-### Testnet Activity
-
-| # | Circle | Size | Contribution | Outcome |
-|---|--------|------|-------------|---------|
-| 1 | Quick Test | 2 | 1 XLM | ✅ Completed full lifecycle |
-| 2 | Blingz Builder | 2 | 1 XLM | ✅ Completed — 2 rounds, payouts sent |
-
-Both circles tested the full on-chain flow: **create → join → contribute → process payout → complete**.
-
-### Key Transactions
-- Circle creation: `3485f2fd1e9a2915723fbb9e44f53b264dd7951590c33659d57444e466e6be8c`
-
 ## Features
 
 - **Create Circles** — Set size, contribution amount, cycle count, and payout order (sequential or randomized)
