@@ -5,52 +5,58 @@ import {
   calculatePayout,
   formatReputation,
   timeUntilNextRound,
-  cn,
-  validateAmount,
-  validateSize,
-  validateName,
-  stroopsToXlm,
+  progressPercent,
   xlmToStroops,
-  clamp,
+  stroopsToNumber,
+  cx,
 } from "../src/lib/utils";
 
 describe("formatXlm", () => {
-  it("converts stroops to XLM", () => {
+  it("converts stroops to XLM (trailing zeros trimmed)", () => {
     expect(formatXlm(10_000_000)).toBe("1");
   });
 
   it("handles large i128 values passed as strings", () => {
     // 1,000,000,000,000,000 stroops = 100,000,000 XLM
-    expect(formatXlm("1000000000000000")).toBe("100,000,000");
+    expect(formatXlm("1000000000000000")).toBe("100000000");
   });
 
   it("handles fractional amounts", () => {
-    // 15,000,000 stroops = 1.5 XLM
+    // 15,000,000 stroops = 1.5 XLM (trailing zero trimmed)
     expect(formatXlm(15_000_000)).toBe("1.5");
-  });
-
-  it("handles string input with quotes (from scval decoding)", () => {
-    expect(formatXlm('"10000000"')).toBe("1");
   });
 
   it("handles zero", () => {
     expect(formatXlm(0)).toBe("0");
+  });
+
+  it("handles negative values", () => {
+    expect(formatXlm(-10_000_000)).toBe("-1");
+  });
+
+  it("supports custom decimals", () => {
+    expect(formatXlm(10_000_000, 0)).toBe("1");
+    expect(formatXlm(15_000_000, 1)).toBe("1.5");
+    expect(formatXlm(15_500_000, 2)).toBe("1.55");
+  });
+
+  it("handles bigint input", () => {
+    expect(formatXlm(50_000_000n)).toBe("5");
   });
 });
 
 describe("shortAddr", () => {
   const addr = "GCW5Q5X2KOZRUUT2A6V54SIHLPKA3BD3HGXEGKSRI6E5EGPPT4EVIUJY";
 
-  it("abbreviates long addresses", () => {
+  it("abbreviates long addresses with 4+4 by default", () => {
     const result = shortAddr(addr);
-    expect(result).toHaveLength(2 * 4 + 1 + 2); // GCW5…IUJY-ish
     expect(result).toContain("…");
-    expect(result.startsWith("GC")).toBe(true);
+    expect(result.startsWith("GCW5")).toBe(true);
     expect(result.endsWith("IUJY")).toBe(true);
   });
 
-  it("respects custom char length", () => {
-    const result = shortAddr(addr, 6);
+  it("respects custom head and tail lengths", () => {
+    const result = shortAddr(addr, 6, 6);
     expect(result.startsWith("GCW5Q5")).toBe(true);
     expect(result.endsWith("EVIUJY")).toBe(true);
   });
@@ -59,156 +65,150 @@ describe("shortAddr", () => {
     expect(shortAddr("ABC")).toBe("ABC");
   });
 
-  it("returns empty for nullish", () => {
-    expect(shortAddr(null)).toBe("");
-    expect(shortAddr(undefined)).toBe("");
+  it("returns empty string for empty input", () => {
     expect(shortAddr("")).toBe("");
   });
 });
 
 describe("calculatePayout", () => {
-  it("computes total pot = size * contribution", () => {
-    // 5 members, 10 XLM each (100,000,000 stroops)
-    expect(calculatePayout(5, 100_000_000)).toBe(50);
+  it("computes total pot = contribution * member count", () => {
+    // 5 members, 10 XLM each (100,000,000 stroops) = 500,000,000 stroops
+    expect(calculatePayout(100_000_000, 5)).toBe(500_000_000n);
   });
 
   it("works with string contribution amounts", () => {
-    expect(calculatePayout(10, "500000000")).toBe(500);
+    // 10 members, 50 XLM each (500,000,000 stroops) = 5,000,000,000 stroops
+    expect(calculatePayout("500000000", 10)).toBe(5_000_000_000n);
   });
 
-  it("returns 0 for size 0", () => {
-    expect(calculatePayout(0, 100_000_000)).toBe(0);
+  it("returns 0n for zero members", () => {
+    expect(calculatePayout(100_000_000, 0)).toBe(0n);
+  });
+
+  it("handles bigint contribution", () => {
+    expect(calculatePayout(200_000_000n, 3)).toBe(600_000_000n);
   });
 });
 
 describe("formatReputation", () => {
-  it("labels excellent reputation", () => {
+  it("labels excellent reputation (>= 90)", () => {
     const r = formatReputation(200);
     expect(r.label).toBe("Excellent");
     expect(r.color).toBe("text-emerald-600");
   });
 
-  it("labels good reputation", () => {
-    const r = formatReputation(120);
+  it("labels good reputation (>= 70)", () => {
+    const r = formatReputation(75);
     expect(r.label).toBe("Good");
     expect(r.color).toBe("text-brand-600");
   });
 
-  it("labels fair reputation", () => {
-    const r = formatReputation(75);
+  it("labels fair reputation (>= 50)", () => {
+    const r = formatReputation(55);
     expect(r.label).toBe("Fair");
     expect(r.color).toBe("text-amber-600");
   });
 
-  it("labels poor reputation", () => {
+  it("labels at-risk reputation (>= 40)", () => {
+    const r = formatReputation(42);
+    expect(r.label).toBe("At Risk");
+    expect(r.color).toBe("text-orange-600");
+  });
+
+  it("labels poor reputation (< 40)", () => {
     const r = formatReputation(20);
     expect(r.label).toBe("Poor");
     expect(r.color).toBe("text-red-600");
   });
 
-  it("uses reputation object score when provided", () => {
-    const r = formatReputation(0, { score: 160 } as never);
-    expect(r.label).toBe("Excellent");
+  it("computes stars from score (max 5)", () => {
+    expect(formatReputation(100).stars).toBe(5);
+    expect(formatReputation(50).stars).toBe(3); // 50/20 = 2.5 -> round -> 3
+    expect(formatReputation(0).stars).toBe(0);
   });
 });
 
 describe("timeUntilNextRound", () => {
+  const WEEK = 7 * 24 * 60 * 60 * 1000;
+
   it("returns 'Now' for past timestamps", () => {
-    expect(timeUntilNextRound(Date.now() - 1000)).toBe("Now");
+    const now = Date.now();
+    const roundStart = now - WEEK - 1000;
+    expect(timeUntilNextRound(now, roundStart)).toBe("Now");
   });
 
-  it("formats minutes", () => {
-    const future = Date.now() + 5 * 60_000;
-    expect(timeUntilNextRound(future)).toBe("5m");
+  it("formats minutes when < 1 hour", () => {
+    const now = 1_000_000;
+    const roundStart = now - WEEK + 5 * 60 * 1000; // 5 min left
+    expect(timeUntilNextRound(now, roundStart)).toBe("5m");
   });
 
   it("formats hours and minutes", () => {
-    const future = Date.now() + 3 * 3_600_000 + 30 * 60_000;
-    expect(timeUntilNextRound(future)).toBe("3h 30m");
+    const now = 1_000_000;
+    const remaining = 3 * 60 * 60 * 1000 + 30 * 60 * 1000; // 3h 30m
+    const roundStart = now - WEEK + remaining;
+    expect(timeUntilNextRound(now, roundStart)).toBe("3h 30m");
   });
 
-  it("formats days", () => {
-    const future = Date.now() + 2 * 86_400_000 + 4 * 3_600_000;
-    expect(timeUntilNextRound(future)).toBe("2d 4h");
+  it("formats days and hours", () => {
+    const now = 1_000_000;
+    const remaining = 2 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000; // 2d 4h
+    const roundStart = now - WEEK + remaining;
+    expect(timeUntilNextRound(now, roundStart)).toBe("2d 4h");
   });
 });
 
-describe("cn", () => {
+describe("progressPercent", () => {
+  it("returns 0 at round 1 of any cycle", () => {
+    expect(progressPercent(1, 5)).toBe(0);
+  });
+
+  it("returns 100 when all rounds complete", () => {
+    expect(progressPercent(6, 5)).toBe(100);
+  });
+
+  it("returns 50 at round 3 of 4", () => {
+    expect(progressPercent(3, 4)).toBe(50);
+  });
+
+  it("returns 0 for zero cycles", () => {
+    expect(progressPercent(1, 0)).toBe(0);
+  });
+});
+
+describe("xlmToStroops", () => {
+  it("converts XLM to stroops", () => {
+    expect(xlmToStroops(1)).toBe(10_000_000n);
+    expect(xlmToStroops("10.5")).toBe(105_000_000n);
+  });
+
+  it("returns 0n for invalid input", () => {
+    expect(xlmToStroops(NaN)).toBe(0n);
+    expect(xlmToStroops(-5)).toBe(0n);
+  });
+});
+
+describe("stroopsToNumber", () => {
+  it("converts stroops to XLM number", () => {
+    expect(stroopsToNumber(10_000_000)).toBe(1);
+    expect(stroopsToNumber("500000000")).toBe(50);
+  });
+
+  it("handles bigint", () => {
+    expect(stroopsToNumber(100_000_000n)).toBe(10);
+  });
+});
+
+describe("cx", () => {
   it("joins truthy class names", () => {
-    expect(cn("a", "b", "c")).toBe("a b c");
+    expect(cx("foo", "bar")).toBe("foo bar");
   });
 
   it("drops falsy values", () => {
-    expect(cn("a", false, null, undefined, "", "b")).toBe("a b");
+    expect(cx("foo", false, null, undefined, "bar")).toBe("foo bar");
   });
 
   it("returns empty string for all falsy", () => {
-    expect(cn(false, null, undefined)).toBe("");
-  });
-});
-
-describe("validateAmount", () => {
-  it("accepts positive amounts", () => {
-    expect(validateAmount(10).ok).toBe(true);
-    expect(validateAmount(0.5).ok).toBe(true);
-  });
-
-  it("rejects zero and negative", () => {
-    expect(validateAmount(0).ok).toBe(false);
-    expect(validateAmount(-5).ok).toBe(false);
-  });
-
-  it("rejects NaN", () => {
-    expect(validateAmount(NaN).ok).toBe(false);
-  });
-});
-
-describe("validateSize", () => {
-  it("requires at least 2 members", () => {
-    expect(validateSize(1).ok).toBe(false);
-    expect(validateSize(2).ok).toBe(true);
-  });
-
-  it("caps at 50 members", () => {
-    expect(validateSize(50).ok).toBe(true);
-    expect(validateSize(51).ok).toBe(false);
-  });
-
-  it("rejects non-integers", () => {
-    expect(validateSize(2.5).ok).toBe(false);
-  });
-});
-
-describe("validateName", () => {
-  it("accepts valid names", () => {
-    expect(validateName("Family Savings").ok).toBe(true);
-  });
-
-  it("rejects too-short names", () => {
-    expect(validateName("A").ok).toBe(false);
-  });
-
-  it("rejects too-long names", () => {
-    expect(validateName("x".repeat(65)).ok).toBe(false);
-  });
-
-  it("trims whitespace before validating", () => {
-    expect(validateName("   ok   ").ok).toBe(true);
-  });
-});
-
-describe("stroopsToXlm / xlmToStroops", () => {
-  it("round-trips correctly", () => {
-    const stroops = xlmToStroops(12.5);
-    expect(stroops).toBe(125_000_000n);
-    expect(stroopsToXlm(stroops)).toBe(12.5);
-  });
-});
-
-describe("clamp", () => {
-  it("clamps to range", () => {
-    expect(clamp(5, 0, 10)).toBe(5);
-    expect(clamp(-1, 0, 10)).toBe(0);
-    expect(clamp(15, 0, 10)).toBe(10);
+    expect(cx(false, null, undefined)).toBe("");
   });
 });

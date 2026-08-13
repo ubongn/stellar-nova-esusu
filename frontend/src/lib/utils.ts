@@ -14,9 +14,10 @@ export function formatXlm(
   const abs = negative ? -big : big;
   const whole = abs / BigInt(STROOPS_PER_XLM);
   const frac = abs % BigInt(STROOPS_PER_XLM);
+  if (decimals === 0) return `${negative ? "-" : ""}${whole}`;
   const fracStr = frac.toString().padStart(7, "0").slice(0, decimals);
-  const trimmed = decimals > 0 ? fracStr.replace(/0+$/, "").padEnd(0, "") : "";
-  const body = decimals > 0 && trimmed.length > 0 ? `${whole}.${trimmed}` : `${whole}.${fracStr}`;
+  const trimmed = fracStr.replace(/0+$/, "");
+  const body = trimmed.length > 0 ? `${whole}.${trimmed}` : `${whole}`;
   return `${negative ? "-" : ""}${body}`;
 }
 
