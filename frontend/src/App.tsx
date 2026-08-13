@@ -6,6 +6,7 @@ import { Toaster } from "@/components/Toaster";
 import { Dashboard } from "@/pages/Dashboard";
 import { CircleDetail } from "@/pages/CircleDetail";
 import { CreateCircle } from "@/pages/CreateCircle";
+import { JoinCircle } from "@/pages/JoinCircle";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/circle/:id" element={<CircleDetail />} />
                 <Route path="/create" element={<CreateCircle />} />
+                <Route path="/join" element={<JoinCircle />} />
               </Routes>
             </main>
             <Toaster />
