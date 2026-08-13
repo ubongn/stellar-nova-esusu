@@ -8,12 +8,14 @@ import {
   Zap,
   CheckCircle2,
   Circle,
+  UserPlus,
+  Loader2,
 } from "lucide-react";
 import { ContributeModal } from "@/components/ContributeModal";
 import { LiveEventFeed } from "@/components/LiveEventFeed";
 import { Button } from "@/components/ui/Button";
 import { FullSpinner } from "@/components/Spinner";
-import { getCircleState } from "@/lib/contract";
+import { getCircleState, joinCircle } from "@/lib/contract";
 import { processPayout } from "@/lib/contract";
 import type { CircleInfo } from "@/lib/types";
 import { useWallet } from "@/context/WalletContext";
@@ -35,6 +37,7 @@ export function CircleDetail() {
   const [loading, setLoading] = useState(true);
   const [showContribute, setShowContribute] = useState(false);
   const [paying, setPaying] = useState(false);
+  const [joining, setJoining] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -89,6 +92,26 @@ export function CircleDetail() {
     }
   }
 
+  async function handleJoin() {
+    if (!address) return;
+    setJoining(true);
+    try {
+      await joinCircle(address, circleId, {
+        onStatus: (s) => {
+          if (s === "done") {
+            push({ type: "success", title: "Joined!", message: `Welcome to ${config.name}` });
+          }
+        },
+      });
+      await load();
+    } catch (err) {
+      const c = classifyError(err instanceof Error ? err.cause ?? err : err);
+      push({ type: "error", title: "Failed to join", message: c.message });
+    } finally {
+      setJoining(false);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <Link
@@ -119,7 +142,18 @@ export function CircleDetail() {
               <span>{config.is_random_order ? "Random order" : "Sequential"}</span>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            {/* Join button: not a member, circle pending, has space */}
+            {!isMember && state === "Pending" && members.length < config.size && (
+              address ? (
+                <Button onClick={handleJoin} loading={joining}>
+                  <UserPlus className="h-4 w-4" /> Join Circle
+                </Button>
+              ) : (
+                <span className="text-sm text-amber-600">Connect wallet to join</span>
+              )
+            )}
+            {/* Contribute button: member + circle active */}
             {isMember && state === "Active" && (
               <button
                 onClick={() => setShowContribute(true)}
@@ -127,6 +161,13 @@ export function CircleDetail() {
               >
                 <Zap className="h-4 w-4" /> Contribute
               </button>
+            )}
+            {/* Waiting for members */}
+            {isMember && state === "Pending" && (
+              <span className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Waiting for {config.size - members.length} more member{config.size - members.length !== 1 ? "s" : ""}
+              </span>
             )}
             {canPayout && (
               <Button onClick={handlePayout} loading={paying} variant="secondary">
