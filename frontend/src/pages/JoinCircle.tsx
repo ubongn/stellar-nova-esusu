@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Search, Loader2, Users, Zap, Crown, Banknote } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
@@ -25,12 +25,12 @@ export function JoinCircle() {
   const [circles, setCircles] = useState<CircleInfo[]>([]);
   const [browsing, setBrowsing] = useState(true);
 
-  useState(() => {
+  useEffect(() => {
     getAllCircles()
       .then(setCircles)
       .catch(() => setCircles([]))
       .finally(() => setBrowsing(false));
-  });
+  }, []);
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();

@@ -14,8 +14,8 @@ Deployed to **Stellar Testnet** by `ubongdeployer4`.
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MemberManager** | `CAOQ5DMMZMJAKFCFI2PAZQYGGKDCPM22H3QLWENUZCEISLKCSTO3X2ZG` | Reputation tracking + eligibility gating |
-| **SavingsPool** | `CCA2V7ERMTLP5IDOUER7DRZMHJXNWPMSU5LZFLCK26K5LKZSOUIFPOZB` | Escrow engine, contributions, payouts |
+| **MemberManager** | `CAW2CCRTONQGRD4OASSFAKRRO2O4GVBGNZYPAV3QW5MVEU3EDWB6NFC2` | Reputation tracking + eligibility gating |
+| **SavingsPool** | `CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5` | Escrow engine, contributions, payouts |
 
 Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
@@ -30,18 +30,21 @@ Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 6. Initialize SavingsPool: `-- initialize --admin <DEPLOYER_ADDRESS> --manager <MANAGER_ID> --token <XLM_SAC>`
 7. Set pool on MemberManager: `-- set_pool --admin <DEPLOYER_ADDRESS> --pool <POOL_ID>`
 
-## Test Circle
+## Test Circles
 
-Created a demo circle to verify contract functionality:
-- Name: "Demo Circle"
-- Size: 3 members
-- Contribution: 50 XLM per round
-- Cycles: 3
+| # | Name | Size | Contribution | Rounds | Status |
+|---|------|------|-------------|--------|--------|
+| 1 | Quick Test | 2 | 1 XLM | 2 | Pending (1/2) |
+| 2 | Abuja Builders | 3 | 5 XLM | 3 | Pending (1/3) |
 
 ## Verify
 
 ```bash
 # Circle count
-stellar contract invoke --id CCA2V7ERMTLP5IDOUER7DRZMHJXNWPMSU5LZFLCK26K5LKZSOUIFPOZB \
+stellar contract invoke --id CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5 \
   --source-account ubongdeployer4 --network testnet -- get_circle_count
+
+# Circle state
+stellar contract invoke --id CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5 \
+  --source-account ubongdeployer4 --network testnet -- get_circle_state --circle_id 1
 ```
