@@ -169,6 +169,14 @@ nova-esusu/
 
 This project collects user feedback through an embedded Google Form. Feedback is analyzed and used to iterate on the product. See the feedback section in the live app.
 
+## User Feedback
+
+We collect user feedback via Google Forms to continuously improve Nova Esusu.
+
+**📋 [Share your feedback](https://docs.google.com/forms/d/e/1FAIpQLSfTZG6zRe7WPucOgPMPOOkh0WDfiW8yN3RO1n6cFchr3U07tA/viewform?usp=publish-editor)** — takes 2 minutes.
+
+Your responses help us prioritize features, fix bugs, and improve the onboarding experience for new users.
+
 ## License
 
 [MIT License](LICENSE) — Copyright © 2026 Ubong Ntekim
