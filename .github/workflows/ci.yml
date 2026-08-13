@@ -16,11 +16,11 @@ jobs:
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          targets: wasm32v1-none
+          target: wasm32v1-none
 
       - name: Install stellar-cli (prebuilt)
         run: |
-          curl -L https://github.com/stellar/stellar-cli/releases/download/v22.7.17/stellar-cli-v22.7.17-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /tmp
+          curl -L https://github.com/stellar/stellar-cli/releases/download/v27.1.0/stellar-cli-27.1.0-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /tmp
           echo "/tmp" >> $GITHUB_PATH
 
       - name: Build contracts
@@ -40,7 +40,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
