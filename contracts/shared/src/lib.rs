@@ -41,6 +41,8 @@ pub enum CircleState {
     Active,
     /// All rounds completed.
     Completed,
+    /// Closed by creator before activation (soft-deleted).
+    Closed,
 }
 
 /// Full snapshot of a circle, returned by `get_circle_state`.
@@ -152,6 +154,9 @@ pub trait PoolTrait {
 
     /// Send the current round pot to the recipient and advance the rotation.
     fn process_payout(env: soroban_sdk::Env, caller: Address, circle_id: u32);
+
+    /// Close a pending circle (creator only, no contributions yet).
+    fn close_circle(env: soroban_sdk::Env, caller: Address, circle_id: u32);
 
     /// Skip a defaulting member and penalize their reputation.
     fn handle_default(

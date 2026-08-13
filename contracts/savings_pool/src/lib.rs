@@ -291,6 +291,29 @@ impl PoolTrait for SavingsPool {
         );
     }
 
+    fn close_circle(env: Env, caller: Address, circle_id: u32) {
+        caller.require_auth();
+
+        let mut info = get_circle(&env, circle_id);
+        if info.state != CircleState::Pending {
+            panic!("only pending circles can be closed");
+        }
+        if info.config.creator != caller {
+            panic!("only the creator can close");
+        }
+        if info.pool_balance > 0 {
+            panic!("circle has contributions — cannot close");
+        }
+
+        info.state = CircleState::Closed;
+        put_circle(&env, circle_id, &info);
+
+        env.events().publish(
+            (symbol_short!("Closed"), circle_id),
+            caller,
+        );
+    }
+
     fn handle_default(env: Env, caller: Address, circle_id: u32, member: Address) {
         caller.require_auth();
 

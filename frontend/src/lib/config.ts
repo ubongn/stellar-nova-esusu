@@ -11,11 +11,11 @@ export const HORIZON_URL = "https://horizon-testnet.stellar.org";
 
 /** SavingsPool contract (escrow engine) — deployed on Testnet. */
 export const SAVINGS_POOL_CONTRACT_ID =
-  "CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3";
+  "CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI";
 
 /** MemberManager contract (reputation) — deployed on Testnet. */
 export const MEMBER_MANAGER_CONTRACT_ID =
-  "CARQ3I5YX6TH4G3NRLWG7EFGPV4VCYNALKCYKFMV56TCSP56XDIL5UTM";
+  "CCKZ7BEZ2FIKJT7FJMMG452CPQM66UABMLNMDYC6IJGB5R2LQ6GQKUJV";
 
 /** Native XLM Stellar Asset Contract (SAC) on Testnet. */
 export const NATIVE_XLM_SAC =

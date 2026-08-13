@@ -14,8 +14,8 @@ Deployed to **Stellar Testnet** by `ubongdeployer4`.
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MemberManager** | `CARQ3I5YX6TH4G3NRLWG7EFGPV4VCYNALKCYKFMV56TCSP56XDIL5UTM` | Reputation tracking + eligibility gating |
-| **SavingsPool** | `CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3` | Escrow engine, contributions, payouts |
+| **MemberManager** | `CCKZ7BEZ2FIKJT7FJMMG452CPQM66UABMLNMDYC6IJGB5R2LQ6GQKUJV` | Reputation tracking + eligibility gating |
+| **SavingsPool** | `CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI` | Escrow engine, contributions, payouts |
 
 Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
@@ -40,10 +40,10 @@ Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 
 ```bash
 # Circle count
-stellar contract invoke --id CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3 \
+stellar contract invoke --id CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI \
   --source-account ubongdeployer4 --network testnet -- get_circle_count
 
 # Circle state
-stellar contract invoke --id CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3 \
+stellar contract invoke --id CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI \
   --source-account ubongdeployer4 --network testnet -- get_circle_state --circle_id 1
 ```

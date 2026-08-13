@@ -2,7 +2,7 @@
  * Shared TypeScript types mirroring the Soroban contract data structures.
  */
 
-export type CircleState = "Pending" | "Active" | "Completed";
+export type CircleState = "Pending" | "Active" | "Completed" | "Closed";
 
 export interface CircleConfig {
   size: number;
@@ -69,7 +69,7 @@ export interface FeedEvent {
   ledger: number;
   createdAt: number;
   text: string;
-  kind: "created" | "contrib" | "payout" | "default" | "joined" | "activated" | "rep" | "invite" | "reg" | "other";
+  kind: "created" | "contrib" | "payout" | "default" | "joined" | "activated" | "rep" | "invite" | "reg" | "closed" | "other";
 }
 
 export interface Toast {

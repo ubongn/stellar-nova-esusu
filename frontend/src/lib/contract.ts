@@ -365,3 +365,17 @@ export function handleDefault(
     opts
   );
 }
+
+export function closeCircle(
+  signer: string,
+  circleId: number,
+  opts?: SubmitOptions
+): Promise<string> {
+  return submitWrite(
+    SAVINGS_POOL_CONTRACT_ID,
+    "close_circle",
+    [addressVal(signer), u32(circleId)],
+    signer,
+    opts
+  );
+}

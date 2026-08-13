@@ -15,7 +15,7 @@ import { ContributeModal } from "@/components/ContributeModal";
 import { LiveEventFeed } from "@/components/LiveEventFeed";
 import { Button } from "@/components/ui/Button";
 import { FullSpinner } from "@/components/Spinner";
-import { getCircleState, joinCircle } from "@/lib/contract";
+import { getCircleState, joinCircle, closeCircle } from "@/lib/contract";
 import { processPayout } from "@/lib/contract";
 import type { CircleInfo } from "@/lib/types";
 import { useWallet } from "@/context/WalletContext";
@@ -38,6 +38,7 @@ export function CircleDetail() {
   const [showContribute, setShowContribute] = useState(false);
   const [paying, setPaying] = useState(false);
   const [joining, setJoining] = useState(false);
+  const [closing, setClosing] = useState(false);
 
   const load = useCallback(async () => {
     try {
@@ -75,6 +76,7 @@ export function CircleDetail() {
     circle;
   const progress = progressPercent(current_round, config.cycle_count);
   const isMember = address ? members.includes(address) : false;
+  const isCreator = address ? config.creator === address : false;
   const yourPosition = address ? members.indexOf(address) : -1;
   const canPayout = state === "Active";
 
@@ -110,6 +112,26 @@ export function CircleDetail() {
       push({ type: "error", title: "Failed to join", message: c.message });
     } finally {
       setJoining(false);
+    }
+  }
+
+  async function handleClose() {
+    if (!address) return;
+    setClosing(true);
+    try {
+      await closeCircle(address, circleId, {
+        onStatus: (s) => {
+          if (s === "done") {
+            push({ type: "success", title: "Circle closed" });
+          }
+        },
+      });
+      await load();
+    } catch (err) {
+      const c = classifyError(err instanceof Error ? err.cause ?? err : err);
+      push({ type: "error", title: "Failed to close", message: c.message });
+    } finally {
+      setClosing(false);
     }
   }
 
@@ -168,6 +190,23 @@ export function CircleDetail() {
               <span className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 Waiting for {config.size - members.length} more member{config.size - members.length !== 1 ? "s" : ""}
+              </span>
+            )}
+            {/* Close button: creator only, pending, no contributions */}
+            {isCreator && state === "Pending" && Number(pool_balance) === 0 && (
+              <button
+                onClick={handleClose}
+                disabled={closing}
+                className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+              >
+                {closing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                Close Circle
+              </button>
+            )}
+            {/* Closed badge */}
+            {state === "Closed" && (
+              <span className="flex items-center gap-2 rounded-xl border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-500">
+                Circle closed
               </span>
             )}
             {canPayout && (
