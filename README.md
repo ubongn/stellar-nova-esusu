@@ -47,7 +47,8 @@ Every member starts with a reputation score of 100. Contributing on time increas
            │  • join_circle       │──►│  • check_eligibility  │
            │  • contribute        │   │  • update_reputation  │
            │  • process_payout    │   │  • track_reputation   │
-           │  • handle_default    │──►│  • invite_member      │
+           │  • close_circle      │   │  • invite_member      │
+           │  • handle_default    │──►│                       │
            └──────────────────────┘   └───────────────────────┘
                     │
            ┌────────▼─────────┐
@@ -63,20 +64,30 @@ Every member starts with a reputation score of 100. Contributing on time increas
 
 | Contract | Address (Testnet) | Purpose |
 |---|---|---|
-| **SavingsPool** | `CCA2V7ERMTLP5IDOUER7DRZMHJXNWPMSU5LZFLCK26K5LKZSOUIFPOZB` | Escrow, contributions, payouts, rotation |
-| **MemberManager** | `CAOQ5DMMZMJAKFCFI2PAZQYGGKDCPM22H3QLWENUZCEISLKCSTO3X2ZG` | Member registration, reputation, eligibility |
+| **SavingsPool** | `CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI` | Escrow, contributions, payouts, rotation, close |
+| **MemberManager** | `CCKZ7BEZ2FIKJT7FJMMG452CPQM66UABMLNMDYC6IJGB5R2LQ6GQKUJV` | Member registration, reputation, eligibility |
 
 ### Deployer
 - Identity: `ubongdeployer4`
 - Address: `GCW5Q5X2KOZRUUT2A6V54SIHLPKA3BD3HGXEGKSRI6E5EGPPT4EVIUJY`
 
-### Test Transaction
-Circle creation tx: `3485f2fd1e9a2915723fbb9e44f53b264dd7951590c33659d57444e466e6be8c`
+### Testnet Activity
+
+| # | Circle | Size | Contribution | Outcome |
+|---|--------|------|-------------|---------|
+| 1 | Quick Test | 2 | 1 XLM | ✅ Completed full lifecycle |
+| 2 | Blingz Builder | 2 | 1 XLM | ✅ Completed — 2 rounds, payouts sent |
+
+Both circles tested the full on-chain flow: **create → join → contribute → process payout → complete**.
+
+### Key Transactions
+- Circle creation: `3485f2fd1e9a2915723fbb9e44f53b264dd7951590c33659d57444e466e6be8c`
 
 ## Features
 
 - **Create Circles** — Set size, contribution amount, cycle count, and payout order (sequential or randomized)
 - **Join Circles** — Eligibility-checked via MemberManager reputation
+- **Close Circles** — Creator can soft-delete pending circles before activation
 - **Contribute** — One-click XLM contribution with real-time transaction status
 - **Automated Payouts** — Full pot rotates to each member in sequence
 - **Reputation System** — On-chain scoring rewards reliable members
