@@ -14,8 +14,8 @@ Deployed to **Stellar Testnet** by `ubongdeployer4`.
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MemberManager** | `CAW2CCRTONQGRD4OASSFAKRRO2O4GVBGNZYPAV3QW5MVEU3EDWB6NFC2` | Reputation tracking + eligibility gating |
-| **SavingsPool** | `CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5` | Escrow engine, contributions, payouts |
+| **MemberManager** | `CARQ3I5YX6TH4G3NRLWG7EFGPV4VCYNALKCYKFMV56TCSP56XDIL5UTM` | Reputation tracking + eligibility gating |
+| **SavingsPool** | `CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3` | Escrow engine, contributions, payouts |
 
 Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
@@ -32,19 +32,18 @@ Native XLM SAC (Stellar Asset Contract) used as the escrow token:
 
 ## Test Circles
 
-| # | Name | Size | Contribution | Rounds | Status |
-|---|------|------|-------------|--------|--------|
-| 1 | Quick Test | 2 | 1 XLM | 2 | Pending (1/2) |
-| 2 | Abuja Builders | 3 | 5 XLM | 3 | Pending (1/3) |
+| # | Name | Size | Contribution | Status |
+|---|------|------|-------------|--------|
+| 1 | Quick Test | 2 | 1 XLM | Pending (1/2) |
 
 ## Verify
 
 ```bash
 # Circle count
-stellar contract invoke --id CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5 \
+stellar contract invoke --id CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3 \
   --source-account ubongdeployer4 --network testnet -- get_circle_count
 
 # Circle state
-stellar contract invoke --id CBWCX2RY7YDDE52R5EKC53452NTV5N4RSA4OWEZWMNFADTOEFFZRLCJ5 \
+stellar contract invoke --id CBUAFLZ73UQ2E5OG6BJO6WENSQZ43PL5N4MPC2AIMNUUNP4RQZYTJZY3 \
   --source-account ubongdeployer4 --network testnet -- get_circle_state --circle_id 1
 ```
