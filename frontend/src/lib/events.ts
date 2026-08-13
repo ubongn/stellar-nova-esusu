@@ -86,6 +86,12 @@ function mapEvent(raw: rpc.Api.EventFilter): FeedEvent | null {
       text = `${shortAddr(member)} was flagged as defaulting`;
       break;
     }
+    case "Closed": {
+      kind = "closed";
+      const creator = toStr(valueDecoded);
+      text = `${shortAddr(creator)} closed circle #${topicVals[1] ?? ""}`;
+      break;
+    }
     case "Rep": {
       kind = "rep";
       const d = Array.isArray(valueDecoded) ? valueDecoded : [];
@@ -131,6 +137,83 @@ export async function fetchEvents(): Promise<FeedEvent[]> {
       .filter(
         (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
       );
+
+    if (events.length > 0) return events;
+  } catch {
+    // fall through to state-based fallback
+  }
+
+  // Fallback: derive feed events from on-chain circle state.
+  return fetchEventsFromState();
+}
+
+/**
+ * Build a synthetic event feed from the contract state.
+ * This covers the common case where the Soroban event history API returns
+ * nothing on testnet (retention window exceeded, archive gaps, etc.).
+ */
+async function fetchEventsFromState(): Promise<FeedEvent[]> {
+  try {
+    const { getAllCircles } = await import("./contract");
+    const circles = await getAllCircles();
+    const events: FeedEvent[] = [];
+
+    for (let i = 0; i < circles.length; i++) {
+      const c = circles[i];
+      const circleId = i + 1;
+      const creator = c.config.creator;
+      const size = c.config.size;
+      const memberCount = c.members.length;
+
+      // 1. Created event
+      events.push({
+        id: `created-${circleId}`,
+        topic: "Created",
+        ledger: 0,
+        createdAt: Date.now() - (circles.length - i) * 60_000,
+        text: `${shortAddr(creator)} created "${c.config.name}" (${size} members, ${formatXlm(c.config.contribution_amount)} XLM)`,
+        kind: "created",
+      });
+
+      // 2. Joined events for each member after the creator
+      for (let m = 1; m < memberCount; m++) {
+        events.push({
+          id: `joined-${circleId}-${m}`,
+          topic: "Joined",
+          ledger: 0,
+          createdAt: Date.now() - (circles.length - i) * 60_000 + m * 10_000,
+          text: `${shortAddr(c.members[m])} joined "${c.config.name}"`,
+          kind: "joined",
+        });
+      }
+
+      // 3. Activated event if circle is now Active
+      if (c.state === "Active") {
+        events.push({
+          id: `activated-${circleId}`,
+          topic: "Activated",
+          ledger: 0,
+          createdAt: Date.now() - (circles.length - i) * 60_000 + memberCount * 10_000,
+          text: `"${c.config.name}" is now active — all ${size} spots filled`,
+          kind: "activated",
+        });
+      }
+
+      // 4. Closed event
+      if (c.state === "Closed") {
+        events.push({
+          id: `closed-${circleId}`,
+          topic: "Closed",
+          ledger: 0,
+          createdAt: Date.now(),
+          text: `${shortAddr(creator)} closed "${c.config.name}"`,
+          kind: "closed",
+        });
+      }
+    }
+
+    // Sort newest first
+    events.sort((a, b) => b.createdAt - a.createdAt);
     return events;
   } catch {
     return [];
