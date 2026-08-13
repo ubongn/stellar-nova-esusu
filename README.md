@@ -77,6 +77,12 @@ Every member starts with a reputation score of 100. Contributing on time increas
 |---|---|---|---|
 | ![Dashboard](screenshots/dashboard-desktop.png) | ![Mobile](screenshots/dashboard-mobile.png) | ![Create](screenshots/create-circle.png) | ![Join](screenshots/join-circle.png) |
 
+### On-Chain Analytics
+
+| Contract Activity (Stellar Expert) |
+|---|
+| ![Analytics](screenshots/stellar-expert-analytics.png) |
+
 ## Features
 
 - **Create Circles** — Set size, contribution amount, cycle count, and payout order (sequential or randomized)
