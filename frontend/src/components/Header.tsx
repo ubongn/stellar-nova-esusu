@@ -1,5 +1,9 @@
-import { Link, NavLink } from "react-router-dom";
-import { Wallet, Zap } from "lucide-react";
+import { useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Wallet, Zap, Menu, X } from "lucide-react";
+import { useWallet } from "@/context/WalletContext";
+import { Spinner } from "./Spinner";
+import { shortAddr, cx } from "@/lib/utils";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -8,22 +12,25 @@ function GithubIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-import { useWallet } from "@/context/WalletContext";
-import { Spinner } from "./Spinner";
-import { shortAddr, cx } from "@/lib/utils";
 
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2">
-      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-card-hover">
-        <Zap className="h-5 w-5" fill="currentColor" />
+      <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-card-hover sm:h-9 sm:w-9">
+        <Zap className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" />
       </span>
-      <span className="text-lg font-extrabold tracking-tight text-gray-900">
+      <span className="text-base font-extrabold tracking-tight text-gray-900 sm:text-lg">
         Nova<span className="text-brand-600">Esusu</span>
       </span>
     </Link>
   );
 }
+
+const NAV_ITEMS = [
+  { to: "/", label: "Dashboard", end: true },
+  { to: "/create", label: "Create", end: false },
+  { to: "/join", label: "Join", end: false },
+];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cx(
@@ -33,27 +40,36 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function Header() {
   const { address, connect, connecting, disconnect } = useWallet();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Close mobile menu on navigation
+  const handleNavClick = () => setMenuOpen(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <div className="flex items-center gap-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16">
+        {/* Left: Logo + Desktop nav */}
+        <div className="flex items-center gap-4 sm:gap-6">
           <Logo />
           <nav className="hidden items-center gap-1 sm:flex">
-            <NavLink to="/" className={navLinkClass} end>
-              Dashboard
-            </NavLink>
-            <NavLink to="/create" className={navLinkClass}>
-              Create
-            </NavLink>
-            <NavLink to="/join" className={navLinkClass}>
-              Join
-            </NavLink>
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={navLinkClass}
+                end={item.end}
+              >
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 sm:flex">
+        {/* Right: Desktop extras + Wallet + Mobile hamburger */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop-only: Testnet badge + GitHub */}
+          <span className="hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 lg:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Testnet
           </span>
@@ -67,8 +83,9 @@ export function Header() {
             <GithubIcon className="h-5 w-5" />
           </a>
 
+          {/* Wallet button — always visible, but compact on small screens */}
           {address ? (
-            <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 sm:flex">
               <span className="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-700">
                 <Wallet className="h-4 w-4 text-brand-500" />
                 {shortAddr(address)}
@@ -84,14 +101,106 @@ export function Header() {
             <button
               onClick={connect}
               disabled={connecting}
-              className="flex items-center gap-2 rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-card transition hover:bg-brand-700 disabled:opacity-60"
+              className="hidden items-center gap-2 rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-card transition hover:bg-brand-700 disabled:opacity-60 sm:flex"
             >
               {connecting ? <Spinner /> : <Wallet className="h-4 w-4" />}
               {connecting ? "Connecting…" : "Connect Wallet"}
             </button>
           )}
+
+          {/* Mobile: Compact wallet icon */}
+          {address && (
+            <div className="flex items-center gap-1.5 sm:hidden">
+              <span className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-2 py-1.5 text-xs font-medium text-gray-700">
+                <Wallet className="h-3.5 w-3.5 text-brand-500" />
+                {shortAddr(address, 3, 3)}
+              </span>
+            </div>
+          )}
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition hover:bg-gray-100 sm:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="border-t border-gray-100 bg-white px-4 pb-4 pt-2 sm:hidden">
+          {/* Nav links */}
+          <nav className="flex flex-col gap-1">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={handleNavClick}
+                className={cx(
+                  "rounded-lg px-3 py-2.5 text-sm font-medium transition",
+                  location.pathname === item.to
+                    ? "bg-brand-50 text-brand-700"
+                    : "text-gray-600 hover:bg-gray-50"
+                )}
+                end={item.end}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <a
+              href="https://github.com/ubongn/stellar-nova-esusu"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50"
+            >
+              <GithubIcon className="h-4 w-4" />
+              GitHub
+            </a>
+          </nav>
+
+          {/* Wallet section */}
+          <div className="mt-3 border-t border-gray-100 pt-3">
+            {address ? (
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2">
+                  <Wallet className="h-4 w-4 text-brand-500" />
+                  <span className="text-sm font-medium text-gray-700">
+                    {shortAddr(address)}
+                  </span>
+                  <span className="ml-auto flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs text-emerald-600">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    Testnet
+                  </span>
+                </div>
+                <button
+                  onClick={() => {
+                    disconnect();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-50"
+                >
+                  Disconnect
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  connect();
+                  setMenuOpen(false);
+                }}
+                disabled={connecting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-brand-700 disabled:opacity-60"
+              >
+                {connecting ? <Spinner /> : <Wallet className="h-4 w-4" />}
+                {connecting ? "Connecting…" : "Connect Wallet"}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }
