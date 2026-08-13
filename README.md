@@ -71,6 +71,16 @@ Every member starts with a reputation score of 100. Contributing on time increas
 - Identity: `ubongdeployer4`
 - Address: `GCW5Q5X2KOZRUUT2A6V54SIHLPKA3BD3HGXEGKSRI6E5EGPPT4EVIUJY`
 
+## Screenshots
+
+| Desktop Dashboard | Mobile Dashboard | Feedback Form |
+|---|---|---|
+| ![Dashboard](screenshots/dashboard-desktop.png) | ![Mobile](screenshots/dashboard-mobile.png) | ![Feedback](screenshots/feedback-form.png) |
+
+| Create Circle | Join Circle |
+|---|---|
+| ![Create](screenshots/create-circle.png) | ![Join](screenshots/join-circle.png) |
+
 ## Features
 
 - **Create Circles** — Set size, contribution amount, cycle count, and payout order (sequential or randomized)
