@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  contracts:
+    name: Build & Check Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          targets: wasm32v1-none
+
+      - name: Install stellar-cli (prebuilt)
+        run: |
+          curl -L https://github.com/stellar/stellar-cli/releases/download/v22.7.17/stellar-cli-v22.7.17-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /tmp
+          echo "/tmp" >> $GITHUB_PATH
+
+      - name: Build contracts
+        working-directory: contracts
+        run: stellar contract build
+
+      - name: Check contracts
+        working-directory: contracts
+        run: cargo check
+
+  frontend:
+    name: Test & Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: frontend
+        run: npm test
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
