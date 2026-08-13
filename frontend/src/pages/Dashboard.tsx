@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PlusCircle, LogIn, Sparkles } from "lucide-react";
 import { CircleCard } from "@/components/CircleCard";
@@ -14,23 +14,22 @@ export function Dashboard() {
   const [circles, setCircles] = useState<CircleInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const all = await getAllCircles();
-      setCircles(all);
-    } catch {
-      setCircles([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    load();
-    const id = setInterval(load, 30_000);
-    return () => clearInterval(id);
-  }, [load]);
+    let alive = true;
+    const fetchCircles = async () => {
+      try {
+        const all = await getAllCircles();
+        if (alive) setCircles(all);
+      } catch {
+        if (alive) setCircles([]);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    };
+    fetchCircles();
+    const id = setInterval(fetchCircles, 60_000);
+    return () => { alive = false; clearInterval(id); };
+  }, []);
 
   const activeCount = circles.filter((c) => c.state === "Active").length;
 

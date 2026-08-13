@@ -40,9 +40,9 @@ export function CircleDetail() {
   const [joining, setJoining] = useState(false);
 
   const load = useCallback(async () => {
-    setLoading(true);
     try {
-      setCircle(await getCircleState(circleId));
+      const data = await getCircleState(circleId);
+      setCircle(data);
     } catch {
       setCircle(null);
     } finally {
@@ -51,8 +51,9 @@ export function CircleDetail() {
   }, [circleId]);
 
   useEffect(() => {
+    setLoading(true);
     load();
-    const t = setInterval(load, 15_000);
+    const t = setInterval(load, 30_000);
     return () => clearInterval(t);
   }, [load]);
 
