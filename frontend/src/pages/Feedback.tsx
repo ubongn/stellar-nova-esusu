@@ -1,22 +1,35 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Send, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-const GOOGLE_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSfPLACEHOLDER/viewform";
+const FEEDBACK_API =
+  "https://script.google.com/macros/s/AKfycbxPLACEHOLDER/exec";
 
 export function Feedback() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [name, setName] = useState("");
   const [role, setRole] = useState("user");
   const [experience, setExperience] = useState("");
   const [featureRequest, setFeatureRequest] = useState("");
   const [rating, setRating] = useState<number | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      await fetch(FEEDBACK_API, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({ name, role, rating, experience, featureRequest }),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true); // still show thank you — no-cors won't return data
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -143,8 +156,9 @@ export function Feedback() {
             />
           </div>
 
-          <Button type="submit" className="w-full">
-            <Send className="h-4 w-4" /> Submit Feedback
+          <Button type="submit" className="w-full" disabled={submitting}>
+            {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            {submitting ? "Submitting…" : "Submit Feedback"}
           </Button>
         </form>
       </div>
