@@ -73,13 +73,9 @@ Every member starts with a reputation score of 100. Contributing on time increas
 
 ## Screenshots
 
-| Desktop Dashboard | Mobile Dashboard | Feedback Form |
-|---|---|---|
-| ![Dashboard](screenshots/dashboard-desktop.png) | ![Mobile](screenshots/dashboard-mobile.png) | ![Feedback](screenshots/feedback-form.png) |
-
-| Create Circle | Join Circle |
-|---|---|
-| ![Create](screenshots/create-circle.png) | ![Join](screenshots/join-circle.png) |
+| Desktop Dashboard | Mobile Dashboard | Create Circle | Join Circle |
+|---|---|---|---|
+| ![Dashboard](screenshots/dashboard-desktop.png) | ![Mobile](screenshots/dashboard-mobile.png) | ![Create](screenshots/create-circle.png) | ![Join](screenshots/join-circle.png) |
 
 ## Features
 
