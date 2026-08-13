@@ -30,6 +30,7 @@ const NAV_ITEMS = [
   { to: "/", label: "Dashboard", end: true },
   { to: "/create", label: "Create", end: false },
   { to: "/join", label: "Join", end: false },
+  { to: "/feedback", label: "Feedback", end: false },
 ];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>

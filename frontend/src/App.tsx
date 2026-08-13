@@ -7,6 +7,7 @@ import { Dashboard } from "@/pages/Dashboard";
 import { CircleDetail } from "@/pages/CircleDetail";
 import { CreateCircle } from "@/pages/CreateCircle";
 import { JoinCircle } from "@/pages/JoinCircle";
+import { Feedback } from "@/pages/Feedback";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
                 <Route path="/circle/:id" element={<CircleDetail />} />
                 <Route path="/create" element={<CreateCircle />} />
                 <Route path="/join" element={<JoinCircle />} />
+                <Route path="/feedback" element={<Feedback />} />
               </Routes>
             </main>
             <Toaster />
