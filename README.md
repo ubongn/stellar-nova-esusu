@@ -173,7 +173,7 @@ This project collects user feedback through an embedded Google Form. Feedback is
 
 We collect user feedback via Google Forms to continuously improve Nova Esusu.
 
-**📋 [Share your feedback](https://docs.google.com/forms/d/e/1FAIpQLSfTZG6zRe7WPucOgPMPOOkh0WDfiW8yN3RO1n6cFchr3U07tA/viewform?usp=publish-editor)** — takes 2 minutes.
+**📋 [Share your feedback](https://docs.google.com/forms/d/e/1FAIpQLSdjiD6qvZ7PcJe6h82sILmBKIQdoWW7Na8vGviGdoLiZ5Ijew/viewform?usp=publish-editor)** — takes 2 minutes.
 
 Your responses help us prioritize features, fix bugs, and improve the onboarding experience for new users.
 
