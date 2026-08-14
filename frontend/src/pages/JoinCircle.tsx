@@ -15,8 +15,9 @@ export function JoinCircle() {
   const { push } = useToast();
   const navigate = useNavigate();
 
-  const [circleId, setCircleId] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [preview, setPreview] = useState<CircleInfo | null>(null);
+  const [previewId, setPreviewId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [joining, setJoining] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,25 +33,48 @@ export function JoinCircle() {
       .finally(() => setBrowsing(false));
   }, []);
 
+  // Name-based search results
+  const nameSearchResults = searchQuery.trim() && !/^\d+$/.test(searchQuery.trim())
+    ? circles.filter((c) =>
+        c.config.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      )
+    : [];
+
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    const id = Number(circleId);
-    if (!id && id !== 0) {
-      setError("Enter a valid circle ID (number).");
+    const query = searchQuery.trim();
+    if (!query) {
+      setError("Enter a circle ID or name.");
       return;
     }
+
     setError(null);
-    setLoading(true);
     setPreview(null);
-    try {
-      const info = await getCircleState(id);
-      setPreview(info);
-    } catch (err) {
-      const classified = classifyError(err instanceof Error ? err.cause ?? err : err);
-      setError(`Circle #${id} not found or network error.`);
-    } finally {
-      setLoading(false);
+    setPreviewId(null);
+
+    // If numeric → search by ID from contract
+    if (/^\d+$/.test(query)) {
+      const id = Number(query);
+      setLoading(true);
+      try {
+        const info = await getCircleState(id);
+        setPreview(info);
+        setPreviewId(id);
+      } catch (err) {
+        setError(`Circle #${id} not found or network error.`);
+      } finally {
+        setLoading(false);
+      }
     }
+    // If text → name search results are shown inline (no API call needed)
+  }
+
+  function handleSelectNameResult(circle: CircleInfo, index: number) {
+    setPreview(circle);
+    setPreviewId(index + 1); // circles are 1-indexed
+    setSearchQuery(circle.config.name);
+    setError(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   async function handleJoin() {
@@ -58,22 +82,15 @@ export function JoinCircle() {
       setError("Connect your wallet first.");
       return;
     }
-    const id = Number(circleId);
+    if (previewId === null) return;
     setError(null);
     setJoining(true);
     try {
-      await joinCircle(address, id, {
+      await joinCircle(address, previewId, {
         onStatus: (s) => {
-          const labels: Record<string, string> = {
-            preparing: "Preparing…",
-            signing: "Waiting for wallet…",
-            submitting: "Submitting…",
-            pending: "Confirming…",
-            done: "Done!",
-          };
           if (s === "done") {
-            push({ type: "success", title: "Joined!", message: `You joined circle #${id}` });
-            setTimeout(() => navigate(`/circle/${id}`), 600);
+            push({ type: "success", title: "Joined!", message: `You joined circle #${previewId}` });
+            setTimeout(() => navigate(`/circle/${previewId}`), 600);
           }
         },
       });
@@ -100,7 +117,7 @@ export function JoinCircle() {
 
       <h1 className="text-2xl font-extrabold text-gray-900">Join a Savings Circle</h1>
       <p className="mt-1 text-sm text-gray-500">
-        Enter a circle ID to join, or browse available circles below.
+        Search by circle ID or name, or browse available circles below.
       </p>
 
       {error && (
@@ -109,15 +126,15 @@ export function JoinCircle() {
         </div>
       )}
 
-      {/* Search by ID */}
+      {/* Search by ID or Name */}
       <form onSubmit={handleSearch} className="mt-6 flex gap-3">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            value={circleId}
-            onChange={(e) => setCircleId(e.target.value)}
-            placeholder="Enter circle ID (e.g. 1)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Enter circle ID or name (e.g. 1 or 'Quick Test')"
             className="w-full rounded-xl border border-gray-300 py-2.5 pl-10 pr-4 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
           />
         </div>
@@ -126,6 +143,54 @@ export function JoinCircle() {
         </Button>
       </form>
 
+      {/* Name search results */}
+      {nameSearchResults.length > 0 && (
+        <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-4">
+          <h3 className="text-sm font-semibold text-gray-700">
+            Found {nameSearchResults.length} circle{nameSearchResults.length > 1 ? "s" : ""} matching "{searchQuery}"
+          </h3>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {nameSearchResults.map((c, i) => {
+              const circleIndex = circles.indexOf(c) + 1; // 1-indexed
+              const isMember = c.members.includes(address ?? "");
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleSelectNameResult(c, circles.indexOf(c))}
+                  className="rounded-xl border border-gray-200 bg-gray-50 p-3 text-left transition hover:border-brand-300 hover:bg-brand-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-gray-900">{c.config.name}</span>
+                    <span className={cx(
+                      "rounded-full px-2 py-0.5 text-xs font-medium",
+                      c.state === "Active" && "bg-emerald-100 text-emerald-700",
+                      c.state === "Pending" && "bg-amber-100 text-amber-700",
+                      c.state === "Completed" && "bg-gray-100 text-gray-600",
+                      c.state === "Closed" && "bg-red-100 text-red-600"
+                    )}>
+                      {c.state}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Circle #{circleIndex} · {c.members.length}/{c.config.size} members · {formatXlm(c.config.contribution_amount)} XLM
+                  </p>
+                  {isMember && (
+                    <span className="mt-1 inline-block text-xs font-medium text-emerald-600">✓ Already joined</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Name search with no results */}
+      {searchQuery.trim() && !/^\d+$/.test(searchQuery.trim()) && nameSearchResults.length === 0 && !loading && (
+        <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-500">
+          No circles found matching "{searchQuery}". Try a different name or enter a circle ID.
+        </div>
+      )}
+
       {/* Preview */}
       {preview && (
         <div className="mt-4 rounded-2xl border border-brand-200 bg-brand-50 p-5">
@@ -133,7 +198,7 @@ export function JoinCircle() {
             <div>
               <h2 className="text-lg font-bold text-gray-900">{preview.config.name}</h2>
               <p className="mt-1 text-xs text-gray-500">
-                Circle #{circleId} · Created by {shortAddr(preview.config.creator)}
+                Circle #{previewId} · Created by {shortAddr(preview.config.creator)}
               </p>
             </div>
             <span
