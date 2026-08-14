@@ -42,6 +42,7 @@ const KIND_COLOR: Record<FeedEvent["kind"], string> = {
 export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
   const [events, setEvents] = useState<FeedEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     let cancel: (() => void) | undefined;
@@ -54,7 +55,9 @@ export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
     return () => cancel?.();
   }, []);
 
-  const shown = compact ? events.slice(0, 6) : events.slice(0, 30);
+  const INITIAL_COUNT = compact ? 6 : 20;
+  const shown = showAll ? events : events.slice(0, INITIAL_COUNT);
+  const hasMore = events.length > INITIAL_COUNT;
 
   return (
     <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
@@ -102,6 +105,17 @@ export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
             );
           })}
         </ul>
+      )}
+
+      {hasMore && !loading && (
+        <button
+          onClick={() => setShowAll((v) => !v)}
+          className="mt-3 w-full rounded-xl border border-gray-200 py-2 text-xs font-medium text-gray-500 transition hover:bg-gray-50 hover:text-gray-700"
+        >
+          {showAll
+            ? "Show less"
+            : `Show all ${events.length} events`}
+        </button>
       )}
     </section>
   );
