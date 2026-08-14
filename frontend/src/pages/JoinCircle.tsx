@@ -251,7 +251,7 @@ export function JoinCircle() {
               </Button>
             )}
             <Link
-              to={`/circle/${circleId}`}
+              to={`/circle/${previewId}`}
               className="text-sm font-medium text-brand-600 hover:underline"
             >
               View details →
