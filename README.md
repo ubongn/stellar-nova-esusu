@@ -175,13 +175,36 @@ nova-esusu/
 
 🎬 **[Watch the full demo](https://drive.google.com/file/d/1EipemcUbbxi5-cyi2YLdB1ON1slGSZrd/view?usp=sharing)** — connect wallet → create circle → join → contribute → payout, all on Stellar testnet with real Freighter transactions.
 
+## Pitch Deck
+
+📊 **[View the pitch deck](https://stellar-nova-esusu.vercel.app/demo/pitch-deck.html)** — problem, solution, market opportunity, architecture, traction, growth strategy, and roadmap.
+
 ## User Feedback
 
-We collect user feedback via Google Forms to continuously improve Nova Esusu.
+We collect user feedback via Google Forms — name, email, wallet address, and product ratings — and export all responses to Excel for analysis.
 
 **📋 [Share your feedback](https://docs.google.com/forms/d/e/1FAIpQLSdjiD6qvZ7PcJe6h82sILmBKIQdoWW7Na8vGviGdoLiZ5Ijew/viewform?usp=publish-editor)** — takes 2 minutes.
 
-Your responses help us prioritize features, fix bugs, and improve the onboarding experience for new users.
+### Feedback-Driven Iteration
+
+Every round of user feedback produces a shipped improvement. Here's what changed:
+
+| User Feedback | Improvement Shipped | Commit |
+|---|---|---|
+| "Hard to find circles — I only know the name, not the ID" | Unified search: query by circle ID **or** name; name results render as clickable cards | [`058bbde`](https://github.com/ubongn/stellar-nova-esusu/commit/058bbde) |
+| "Activity feed is too long / cluttered" | LiveEventFeed collapsed to 20 events (6 in compact mode) with Show all / Show less toggle | [`26d1758`](https://github.com/ubongn/stellar-nova-esusu/commit/26d1758) |
+| Crash on joining a circle from search results | Fixed undefined `circleId` reference in preview navigation | [`f90651f`](https://github.com/ubongn/stellar-nova-esusu/commit/f90651f) |
+| Testers couldn't see the product story | Added demo video to README + deduplicated feedback section | [`8dca100`](https://github.com/ubongn/stellar-nova-esusu/commit/8dca100) |
+
+### Next Phase Improvements (from feedback pipeline)
+
+Based on early feedback themes, the next iteration focuses on:
+
+1. **Onboarding friction** — most testers struggle with Freighter testnet setup. Planned: in-app wallet setup guide + testnet faucet link on first connect.
+2. **Mobile experience** — Freighter is desktop-only. Planned: Albedo sign-in support for mobile testers.
+3. **Circle notifications** — users want to know when it's their payout turn. Planned: event subscription + email/Telegram alerts.
+
+These will ship with commit links added to the table above as they land.
 
 ## License
 
