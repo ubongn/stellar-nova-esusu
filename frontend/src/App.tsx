@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastProvider } from "@/context/ToastContext";
 import { WalletProvider } from "@/context/WalletContext";
 import { Header } from "@/components/Header";
@@ -12,7 +12,7 @@ export default function App() {
   return (
     <ToastProvider>
       <WalletProvider>
-        <HashRouter>
+        <BrowserRouter>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">
@@ -25,7 +25,7 @@ export default function App() {
             </main>
             <Toaster />
           </div>
-        </HashRouter>
+        </BrowserRouter>
       </WalletProvider>
     </ToastProvider>
   );
