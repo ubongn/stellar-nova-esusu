@@ -191,6 +191,7 @@ Every round of user feedback produces a shipped improvement. Here's what changed
 
 | User Feedback | Improvement Shipped | Commit |
 |---|---|---|
+| "Translating the page into Turkish causes a white-screen crash (insertBefore error)" + "create-form summary shows stale values" — Mustafa, external tester | Root-caused both symptoms to Chrome auto-translate mutating the DOM under React; disabled page translation (`translate="no"` + notranslate meta). Any non-English browser no longer crashes the app. | [`6298daf`](https://github.com/ubongn/stellar-nova-esusu/commit/6298daf) |
 | "Hard to find circles — I only know the name, not the ID" | Unified search: query by circle ID **or** name; name results render as clickable cards | [`058bbde`](https://github.com/ubongn/stellar-nova-esusu/commit/058bbde) |
 | "Activity feed is too long / cluttered" | LiveEventFeed collapsed to 20 events (6 in compact mode) with Show all / Show less toggle | [`26d1758`](https://github.com/ubongn/stellar-nova-esusu/commit/26d1758) |
 | Crash on joining a circle from search results | Fixed undefined `circleId` reference in preview navigation | [`f90651f`](https://github.com/ubongn/stellar-nova-esusu/commit/f90651f) |
