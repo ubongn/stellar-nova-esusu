@@ -147,7 +147,7 @@ export function CreateCircle() {
                 min={2}
                 max={50}
                 value={size}
-                onChange={(e) => setSize(Number(e.target.value))}
+                onChange={(e) => setSize(e.target.value === "" ? 2 : Number(e.target.value))}
                 className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
                 disabled={busy}
               />
@@ -163,7 +163,7 @@ export function CreateCircle() {
                 min={1}
                 max={size}
                 value={cycleCount}
-                onChange={(e) => setCycleCount(Number(e.target.value))}
+                onChange={(e) => setCycleCount(e.target.value === "" ? 1 : Number(e.target.value))}
                 className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
                 disabled={busy}
               />
@@ -183,7 +183,7 @@ export function CreateCircle() {
               max={10000}
               step={0.1}
               value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(e.target.value === "" ? 1 : Number(e.target.value))}
               className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
               disabled={busy}
             />
