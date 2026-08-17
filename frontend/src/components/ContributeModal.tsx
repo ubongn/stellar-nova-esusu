@@ -47,8 +47,16 @@ export function ContributeModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const disabled =
-    status !== "idle" && status !== "confirmed" && status !== "failed";
+  // Auto-close shortly after on-chain confirmation so the success state is
+  // seen, then the user is returned to the refreshed circle view.
+  useEffect(() => {
+    if (status !== "confirmed") return;
+    const t = setTimeout(onClose, 2000);
+    return () => clearTimeout(t);
+  }, [status, onClose]);
+
+  // Busy during processing; locked after success; only failure re-enables for retry.
+  const disabled = status !== "idle" && status !== "failed";
   const activeStep = stepIndex(status);
 
   async function handleContribute() {
