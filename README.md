@@ -83,6 +83,16 @@ Every member starts with a reputation score of 100. Contributing on time increas
 |---|
 | ![Analytics](screenshots/stellar-expert-analytics.png) |
 
+### Real User Activity (Testnet)
+
+Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled by an external tester. On activation the contract shuffled and locked a random payout order; all 3 members contributed on-chain via their own wallets.
+
+| Active Circle — 3/3 members, random payout order locked | External tester's live activity on-chain |
+|---|---|
+| ![Circle 6 active](screenshots/users/circle-6-active-3of3.png) | ![Contract activity](screenshots/users/stellar-expert-contract-activity.png) |
+
+All wallet interactions (creates, joins, contributions, payouts) are verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
+
 ## Features
 
 - **Create Circles** — Set size, contribution amount, cycle count, and payout order (sequential or randomized)
