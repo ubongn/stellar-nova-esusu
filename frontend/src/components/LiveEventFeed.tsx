@@ -60,7 +60,7 @@ export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
   const hasMore = events.length > INITIAL_COUNT;
 
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
+    <section className="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
       <div className="flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-base font-bold text-gray-900">
           <span className="relative flex h-2 w-2">
@@ -79,7 +79,10 @@ export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
           No events yet. Create or contribute to a circle to see live activity.
         </p>
       ) : (
-        <ul className="mt-3 space-y-1">
+        <ul
+          className="mt-3 max-h-96 space-y-1 overflow-y-auto pr-1"
+          style={{ scrollbarWidth: "thin" }}
+        >
           {shown.map((e) => {
             const Icon = KIND_ICON[e.kind] ?? Activity;
             return (
