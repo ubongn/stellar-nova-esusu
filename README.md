@@ -171,9 +171,9 @@ nova-esusu/
 | **Mainnet Launch** | 📋 Planned | Security audit + mainnet deploy + real adoption |
 | **Ecosystem Growth** | 📋 Planned | 500+ users + cross-border anchor integration |
 
-## User Feedback
+## Demo Video
 
-This project collects user feedback through an embedded Google Form. Feedback is analyzed and used to iterate on the product. See the feedback section in the live app.
+🎬 **[Watch the full demo](https://drive.google.com/file/d/1EipemcUbbxi5-cyi2YLdB1ON1slGSZrd/view?usp=sharing)** — connect wallet → create circle → join → contribute → payout, all on Stellar testnet with real Freighter transactions.
 
 ## User Feedback
 
