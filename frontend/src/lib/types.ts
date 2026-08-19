@@ -41,6 +41,7 @@ export interface Contribution {
 /** Classified error categories surfaced to the UI. */
 export type ErrorCategory =
   | "wallet_not_found"
+  | "wallet_not_connected"
   | "connection_rejected"
   | "insufficient_balance"
   | "network"

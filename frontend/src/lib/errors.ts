@@ -3,6 +3,15 @@ import type { ClassifiedError, ErrorCategory } from "./types";
 
 const PATTERNS: Array<{ test: RegExp; category: ErrorCategory; message: string }> = [
   {
+    // Freighter blocks signing with "…is not currently connected to Freighter"
+    // when the per-site permission is missing (extension reset, different
+    // browser profile, revoked permission).
+    test: /not currently connected|is not connected|no account found|wallet not connected/i,
+    category: "wallet_not_connected",
+    message:
+      "Your wallet isn't connected to this site (extension reset or different browser profile). Click Connect Wallet again, approve the site in the extension, then retry — nothing was lost.",
+  },
+  {
     test: /not found|not installed|freighter|xbull|albedo/i,
     category: "wallet_not_found",
     message: "Wallet not found. Please install the wallet extension.",

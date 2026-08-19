@@ -2,6 +2,16 @@ import { describe, it, expect } from "vitest";
 import { classifyError } from "../src/lib/errors";
 
 describe("classifyError", () => {
+  it("classifies Freighter's site-not-connected signing block", () => {
+    const c = classifyError(
+      new Error(
+        "stellar-nova-esusu.vercel.app is not currently connected to Freighter"
+      )
+    );
+    expect(c.category).toBe("wallet_not_connected");
+    expect(c.message).toMatch(/Connect Wallet again/i);
+  });
+
   it("classifies wallet-not-found errors", () => {
     const c = classifyError(new Error("Freighter is not installed"));
     expect(c.category).toBe("wallet_not_found");
