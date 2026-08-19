@@ -195,12 +195,24 @@ We collect user feedback via Google Forms — name, email, wallet address, and p
 
 **📋 [Share your feedback](https://docs.google.com/forms/d/e/1FAIpQLSdjiD6qvZ7PcJe6h82sILmBKIQdoWW7Na8vGviGdoLiZ5Ijew/viewform?usp=publish-editor)** — takes 2 minutes.
 
+### Collected Responses (Excel)
+
+📥 **[Download all feedback responses (.xlsx)](docs/feedback/nova-esusu-feedback-2026-08-19.xlsx)** — 3 responses to date.
+
+**Results snapshot:** every tester rated **5/5** across all categories — wallet connection ease, transaction speed, and escrow security. Zero bugs reported by testers. Feature requests received: dark theme (shipped), interactive onboarding guide, CSV transaction export, sandbox mode.
+
+*Wallet addresses in the responses are verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI) — every response maps to real on-chain activity.*
+
 ### Feedback-Driven Iteration
 
 Every round of user feedback produces a shipped improvement. Here's what changed:
 
 | User Feedback | Improvement Shipped | Commit |
 |---|---|---|
+| "Dark theme plsssss" — Nomet, external tester (feedback form) | Full dark mode: class-based theme across every surface, header toggle (sun/moon), persisted choice, OS-preference default, zero-flash pre-paint script | [`738684d`](https://github.com/ubongn/stellar-nova-esusu/commit/738684d) |
+| Navbar felt heavy in dark mode | Transparent navbar at rest, elevated surface + shadow on scroll | [`3ebbb2d`](https://github.com/ubongn/stellar-nova-esusu/commit/3ebbb2d) |
+| "Once a transaction is confirmed, the modal should close / button stay disabled" — Ubong (dogfooding) | Contribute modal locks after on-chain confirmation + auto-closes after showing success state; only a failed tx re-enables retry | [`5943537`](https://github.com/ubongn/stellar-nova-esusu/commit/5943537) |
+| "Activity feed stretches the page as events accumulate" | Scrollable Live Activity feed (in-card, max-height, thin scrollbar) | [`4fad3b4`](https://github.com/ubongn/stellar-nova-esusu/commit/4fad3b4) |
 | "Translating the page into Turkish causes a white-screen crash (insertBefore error)" + "create-form summary shows stale values" — [Mustafa Çolak](https://github.com/mustafaColak0), external tester | Root-caused both symptoms to Chrome auto-translate mutating the DOM under React; disabled page translation (`translate="no"` + notranslate meta). Any non-English browser no longer crashes the app. | [`6298daf`](https://github.com/ubongn/stellar-nova-esusu/commit/6298daf) |
 | "Hard to find circles — I only know the name, not the ID" | Unified search: query by circle ID **or** name; name results render as clickable cards | [`058bbde`](https://github.com/ubongn/stellar-nova-esusu/commit/058bbde) |
 | "Activity feed is too long / cluttered" | LiveEventFeed collapsed to 20 events (6 in compact mode) with Show all / Show less toggle | [`26d1758`](https://github.com/ubongn/stellar-nova-esusu/commit/26d1758) |
