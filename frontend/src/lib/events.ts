@@ -136,7 +136,14 @@ export async function fetchEvents(): Promise<FeedEvent[]> {
       // Deduplicate by id.
       .filter(
         (e, i, arr) => arr.findIndex((x) => x.id === e.id) === i
-      );
+      )
+      // Newest first: the RPC returns the page in ascending cursor order.
+      // Ledger desc is primary; the Soroban cursor id (fixed-width) breaks ties
+      // within the same ledger.
+      .sort((a, b) => {
+        if (b.ledger !== a.ledger) return b.ledger - a.ledger;
+        return String(b.id).localeCompare(String(a.id));
+      });
 
     if (events.length > 0) return events;
   } catch {

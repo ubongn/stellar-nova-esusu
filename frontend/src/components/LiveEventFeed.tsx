@@ -50,7 +50,7 @@ export function LiveEventFeed({ compact = false }: { compact?: boolean }) {
       const initial = await fetchEvents();
       setEvents(initial);
       setLoading(false);
-      cancel = startEventPolling(setEvents, 15_000);
+      cancel = startEventPolling(setEvents, 5_000);
     })();
     return () => cancel?.();
   }, []);
