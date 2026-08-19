@@ -197,9 +197,9 @@ We collect user feedback via Google Forms — name, email, wallet address, and p
 
 ### Collected Responses (Excel)
 
-📥 **[Download all feedback responses (.xlsx)](docs/feedback/nova-esusu-feedback-2026-08-19.xlsx)** — 3 responses to date.
+📥 **[Download all feedback responses (.xlsx)](docs/feedback/nova-esusu-feedback-2026-08-19.xlsx)** — 4 responses to date.
 
-**Results snapshot:** every tester rated **5/5** across all categories — wallet connection ease, transaction speed, and escrow security. Zero bugs reported by testers. Feature requests received: dark theme (shipped), interactive onboarding guide, CSV transaction export, sandbox mode.
+**Results snapshot:** every tester rated **5/5** across all categories — wallet connection ease, transaction speed, and escrow security. Zero bugs reported by testers. Feature requests received: dark theme (shipped), interactive onboarding guide (shipped), auto-contribute, payout-turn notifications, savings-history dashboard, CSV transaction export.
 
 *Wallet addresses in the responses are verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI) — every response maps to real on-chain activity.*
 
@@ -224,9 +224,11 @@ Every round of user feedback produces a shipped improvement. Here's what changed
 
 Based on early feedback themes, the next iteration focuses on:
 
-1. **Onboarding friction** — most testers struggle with Freighter testnet setup. Planned: in-app wallet setup guide + testnet faucet link on first connect.
-2. **Mobile experience** — Freighter is desktop-only. Planned: Albedo sign-in support for mobile testers.
-3. **Circle notifications** — users want to know when it's their payout turn. Planned: event subscription + email/Telegram alerts.
+1. **Payout-turn awareness** — "push notifications when it's my turn to receive the pot" (Blingz Kim). Planned: event subscription + email/Telegram alerts.
+2. **Auto-contribute** — opt-in automatic contribution when a round opens (Blingz Kim).
+3. **Savings history dashboard** — per-wallet contribution/payout history export (Blingz Kim, Mustafa).
+4. **Clearer error messages** — human-readable failure states for every tx path (Blingz Kim).
+5. **Mobile experience** — Freighter is desktop-only. Planned: Albedo sign-in support for mobile testers.
 
 These will ship with commit links added to the table above as they land.
 
