@@ -17,6 +17,14 @@
   *:focus-visible {
     @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-950;
   }
+
+  /* Safety net: bare form controls must never fall back to the
+     browser-default white surface (invisible values in dark mode). */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),
+  select,
+  textarea {
+    @apply bg-white text-gray-900 placeholder-gray-400 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500;
+  }
 }
 
 @layer components {
