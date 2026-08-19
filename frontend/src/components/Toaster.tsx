@@ -10,20 +10,20 @@ const STYLES: Record<
   success: {
     icon: CheckCircle2,
     ring: "border-emerald-200",
-    bg: "bg-emerald-50",
-    text: "text-emerald-800",
+    bg: "bg-emerald-50 dark:bg-emerald-500/10",
+    text: "text-emerald-800 dark:text-emerald-300",
   },
   info: {
     icon: Info,
     ring: "border-brand-200",
-    bg: "bg-brand-50",
-    text: "text-brand-800",
+    bg: "bg-brand-50 dark:bg-brand-500/10",
+    text: "text-brand-800 dark:text-brand-300",
   },
   error: {
     icon: XCircle,
     ring: "border-red-200",
-    bg: "bg-red-50",
-    text: "text-red-800",
+    bg: "bg-red-50 dark:bg-red-500/10",
+    text: "text-red-800 dark:text-red-300",
   },
 };
 

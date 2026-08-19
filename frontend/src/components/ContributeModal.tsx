@@ -90,26 +90,26 @@ export function ContributeModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-gray-900/40 p-0 backdrop-blur-sm sm:items-center sm:p-4">
-      <div className="w-full max-w-md rounded-t-2xl border border-gray-200 bg-white p-5 shadow-xl sm:rounded-2xl">
+      <div className="w-full max-w-md rounded-t-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-xl sm:rounded-2xl">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-gray-900">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">
             Contribute to {circle.config.name}
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100"
+            className="rounded-lg p-1.5 text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/60"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="mt-4 rounded-xl bg-brand-50 p-3 text-sm text-brand-800">
+        <div className="mt-4 rounded-xl bg-brand-50 dark:bg-brand-500/10 p-3 text-sm text-brand-800 dark:text-brand-300">
           Required this round:{" "}
           <span className="font-semibold">{formatXlm(circle.config.contribution_amount)} XLM</span>
         </div>
 
-        <label className="mt-4 block text-sm font-medium text-gray-700">
+        <label className="mt-4 block text-sm font-medium text-gray-700 dark:text-gray-300">
           Amount (XLM)
         </label>
         <input
@@ -119,7 +119,7 @@ export function ContributeModal({
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           disabled={disabled}
-          className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2.5 text-lg font-semibold text-gray-900 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200 disabled:bg-gray-50"
+          className="mt-1 w-full rounded-xl border border-gray-300 dark:border-gray-700 px-3 py-2.5 text-lg font-semibold text-gray-900 dark:text-white outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-500/40 disabled:bg-gray-50 dark:disabled:bg-gray-800"
         />
         <div className="mt-2 flex flex-wrap gap-2">
           {QUICK.map((q) => (
@@ -128,7 +128,7 @@ export function ContributeModal({
               type="button"
               onClick={() => setAmount(String(q))}
               disabled={disabled}
-              className="rounded-lg border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 transition hover:border-brand-300 hover:bg-brand-50 disabled:opacity-50"
+              className="rounded-lg border border-gray-200 dark:border-gray-800 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 transition hover:border-brand-300 dark:hover:border-brand-500/50 hover:bg-brand-50 dark:hover:bg-brand-500/15 disabled:opacity-50"
             >
               {q} XLM
             </button>
@@ -136,7 +136,7 @@ export function ContributeModal({
         </div>
 
         {status !== "idle" && (
-          <div className="mt-4 space-y-2 rounded-xl border border-gray-100 bg-gray-50 p-3">
+          <div className="mt-4 space-y-2 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 p-3">
             {STEPS.map((step, i) => {
               const done = i < activeStep || status === "confirmed";
               const current = i === activeStep && status !== "confirmed";
@@ -149,7 +149,7 @@ export function ContributeModal({
                         ? "bg-emerald-500"
                         : current
                         ? "bg-brand-500"
-                        : "bg-gray-300"
+                        : "bg-gray-300 dark:bg-gray-700"
                     )}
                   >
                     {done ? (
@@ -162,7 +162,7 @@ export function ContributeModal({
                   </span>
                   <span
                     className={cx(
-                      done || current ? "font-medium text-gray-800" : "text-gray-400"
+                      done || current ? "font-medium text-gray-800 dark:text-gray-100" : "text-gray-400 dark:text-gray-500"
                     )}
                   >
                     {step.label}
@@ -171,12 +171,12 @@ export function ContributeModal({
               );
             })}
             {status === "confirmed" && (
-              <p className="flex items-center gap-1.5 pt-1 text-sm font-semibold text-emerald-600">
+              <p className="flex items-center gap-1.5 pt-1 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 <Check className="h-4 w-4" /> Transaction confirmed on-chain
               </p>
             )}
             {status === "failed" && (
-              <p className="pt-1 text-sm font-medium text-red-600">{errorMsg}</p>
+              <p className="pt-1 text-sm font-medium text-red-600 dark:text-red-400">{errorMsg}</p>
             )}
           </div>
         )}
@@ -198,7 +198,7 @@ export function ContributeModal({
           )}
         </button>
         {!address && (
-          <p className="mt-2 text-center text-xs text-gray-400">
+          <p className="mt-2 text-center text-xs text-gray-400 dark:text-gray-500">
             Connect your wallet to contribute.
           </p>
         )}

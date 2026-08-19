@@ -9,9 +9,9 @@ import {
 } from "@/lib/utils";
 
 const STATE_STYLES: Record<string, string> = {
-  Pending: "bg-amber-50 text-amber-700 border-amber-200",
-  Active: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  Completed: "bg-gray-100 text-gray-600 border-gray-200",
+  Pending: "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200",
+  Active: "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200",
+  Completed: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-800",
 };
 
 export function CircleCard({
@@ -34,12 +34,12 @@ export function CircleCard({
   return (
     <Link
       to={`/circle/${circleId}`}
-      className="group block rounded-2xl border border-gray-200 bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover"
+      className="group block rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-base font-bold text-gray-900">{config.name}</h3>
-          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-gray-500">
+          <h3 className="text-base font-bold text-gray-900 dark:text-white">{config.name}</h3>
+          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
             <Users className="h-3.5 w-3.5" />
             {members.length}/{config.size} members
           </p>
@@ -55,14 +55,14 @@ export function CircleCard({
       </div>
 
       <div className="mt-4">
-        <div className="flex items-center justify-between text-xs text-gray-500">
+        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
           <span>
             Round {Math.min(current_round, config.cycle_count)}/
             {config.cycle_count}
           </span>
           <span>{progress}%</span>
         </div>
-        <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+        <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
           <div
             className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all"
             style={{ width: `${progress}%` }}
@@ -72,21 +72,21 @@ export function CircleCard({
 
       <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
         <div>
-          <p className="text-xs text-gray-400">Contribution</p>
-          <p className="font-semibold text-gray-900">
+          <p className="text-xs text-gray-400 dark:text-gray-500">Contribution</p>
+          <p className="font-semibold text-gray-900 dark:text-white">
             {formatXlm(config.contribution_amount)} XLM
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-400">Pot</p>
-          <p className="font-semibold text-gray-900">
+          <p className="text-xs text-gray-400 dark:text-gray-500">Pot</p>
+          <p className="font-semibold text-gray-900 dark:text-white">
             {formatXlm(pool_balance)} XLM
           </p>
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-        <div className="flex items-center gap-2 text-xs text-gray-500">
+      <div className="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
+        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
           {nextPayout && (
             <>
               <Crown className="h-3.5 w-3.5 text-amber-500" />
@@ -94,12 +94,12 @@ export function CircleCard({
             </>
           )}
           {yourPosition >= 0 && (
-            <span className="rounded-md bg-brand-50 px-1.5 py-0.5 font-medium text-brand-700">
+            <span className="rounded-md bg-brand-50 dark:bg-brand-500/10 px-1.5 py-0.5 font-medium text-brand-700 dark:text-brand-300">
               You&apos;re #{yourPosition + 1}
             </span>
           )}
         </div>
-        <ArrowRight className="h-4 w-4 text-gray-300 transition group-hover:translate-x-0.5 group-hover:text-brand-500" />
+        <ArrowRight className="h-4 w-4 text-gray-300 dark:text-gray-600 transition group-hover:translate-x-0.5 group-hover:text-brand-500" />
       </div>
     </Link>
   );

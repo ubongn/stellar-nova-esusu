@@ -22,11 +22,11 @@ export function Button({
       className={cx(
         "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition",
         variant === "primary" &&
-          "bg-brand-600 text-white shadow-sm hover:bg-brand-700 disabled:bg-gray-300",
+          "bg-brand-600 text-white shadow-sm hover:bg-brand-700 disabled:bg-gray-300 dark:disabled:bg-gray-700",
         variant === "secondary" &&
-          "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50",
+          "border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/60",
         variant === "ghost" &&
-          "text-gray-600 hover:bg-gray-100",
+          "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60",
         variant === "danger" &&
           "bg-red-600 text-white hover:bg-red-700",
         size === "sm" && "px-3 py-1.5 text-xs",

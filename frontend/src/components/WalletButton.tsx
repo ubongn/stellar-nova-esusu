@@ -56,16 +56,16 @@ export function WalletButton() {
       {menuOpen && (
         <div
           role="menu"
-          className="absolute right-0 mt-2 w-64 overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-card-hover"
+          className="absolute right-0 mt-2 w-64 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 py-1 shadow-card-hover"
         >
-          <div className="border-b border-gray-100 px-4 py-3">
-            <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <div className="border-b border-gray-100 dark:border-gray-800 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
               Connected
             </p>
-            <p className="mt-0.5 break-all font-mono text-xs text-gray-700">{address}</p>
+            <p className="mt-0.5 break-all font-mono text-xs text-gray-700 dark:text-gray-300">{address}</p>
           </div>
-          <div className="px-4 py-2 text-xs text-gray-500">
-            <span className="inline-flex items-center gap-1 text-emerald-600">
+          <div className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+            <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
               <CheckIcon className="h-3 w-3" /> Wallet ready
             </span>
           </div>
@@ -75,7 +75,7 @@ export function WalletButton() {
               setMenuOpen(false);
               disconnect();
             }}
-            className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+            className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/15"
           >
             <XIcon className="h-4 w-4" />
             Disconnect

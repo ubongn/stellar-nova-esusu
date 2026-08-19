@@ -10,6 +10,20 @@
       content="Nova Esusu — Trustless rotating savings circles on Stellar. Save together, rotate payouts, build reputation."
     />
     <title>Nova Esusu — Trustless Rotating Savings on Stellar</title>
+    <script>
+      // Apply persisted (or system) theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var t = localStorage.getItem("nova-theme");
+          if (
+            t === "dark" ||
+            (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

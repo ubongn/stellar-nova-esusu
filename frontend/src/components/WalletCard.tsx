@@ -16,11 +16,11 @@ function StatRow({
 }) {
   return (
     <div className="flex items-center justify-between py-2">
-      <span className="flex items-center gap-2 text-sm text-gray-500">
+      <span className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
         {icon}
         {label}
       </span>
-      <span className={cx("text-sm font-semibold text-gray-900", accent)}>
+      <span className={cx("text-sm font-semibold text-gray-900 dark:text-white", accent)}>
         {value}
       </span>
     </div>
@@ -32,9 +32,9 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
 
   if (!address) {
     return (
-      <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 p-6 text-center">
-        <Wallet className="mx-auto h-8 w-8 text-gray-400" />
-        <p className="mt-3 text-sm font-medium text-gray-600">
+      <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 p-6 text-center">
+        <Wallet className="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500" />
+        <p className="mt-3 text-sm font-medium text-gray-600 dark:text-gray-300">
           Connect your wallet to view your reputation and active circles.
         </p>
       </div>
@@ -46,13 +46,13 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
     : formatReputation(100);
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-card">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-gray-400">
+          <p className="text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">
             Connected
           </p>
-          <p className="font-mono text-sm font-semibold text-gray-900">
+          <p className="font-mono text-sm font-semibold text-gray-900 dark:text-white">
             {shortAddr(address, 6, 6)}
           </p>
         </div>
@@ -60,8 +60,8 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
           className={cx(
             "flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold",
             reputation?.in_good_standing
-              ? "bg-emerald-50 text-emerald-700"
-              : "bg-amber-50 text-amber-700"
+              ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+              : "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300"
           )}
         >
           <Shield className="h-3.5 w-3.5" />
@@ -75,7 +75,7 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
             key={i}
             className={cx(
               "h-1.5 flex-1 rounded-full",
-              i < rep.stars ? "bg-brand-500" : "bg-gray-200"
+              i < rep.stars ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-700"
             )}
           />
         ))}
@@ -84,7 +84,7 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
         </span>
       </div>
 
-      <div className="mt-4 divide-y divide-gray-100 border-t border-gray-100">
+      <div className="mt-4 divide-y divide-gray-100 border-t border-gray-100 dark:border-gray-800">
         <StatRow
           icon={<Users className="h-4 w-4" />}
           label="Circles joined"
@@ -94,14 +94,14 @@ export function WalletCard({ activeCircles = 0 }: { activeCircles?: number }) {
           icon={<Users className="h-4 w-4" />}
           label="Active circles"
           value={String(activeCircles)}
-          accent="text-brand-600"
+          accent="text-brand-600 dark:text-brand-400"
         />
         <StatRow
           icon={<Shield className="h-4 w-4" />}
           label="Defaults"
           value={String(reputation?.defaults ?? 0)}
           accent={
-            (reputation?.defaults ?? 0) > 0 ? "text-red-600" : undefined
+            (reputation?.defaults ?? 0) > 0 ? "text-red-600 dark:text-red-400" : undefined
           }
         />
         <StatRow

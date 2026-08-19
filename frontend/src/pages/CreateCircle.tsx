@@ -93,26 +93,26 @@ export function CreateCircle() {
     <div className="mx-auto max-w-2xl px-4 py-8">
       <Link
         to="/"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 transition hover:text-gray-700"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 transition hover:text-gray-700 dark:hover:text-gray-200"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Dashboard
       </Link>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-card sm:p-8">
-        <h1 className="text-2xl font-extrabold text-gray-900">Create a Savings Circle</h1>
-        <p className="mt-1 text-sm text-gray-500">
+      <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-card sm:p-8">
+        <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">Create a Savings Circle</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Set up a new rotating savings circle on Stellar testnet.
         </p>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 dark:bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
             {error}
           </div>
         )}
 
         {status && (
-          <div className="mt-4 flex items-center gap-3 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-800">
+          <div className="mt-4 flex items-center gap-3 rounded-xl border border-brand-200 bg-brand-50 dark:bg-brand-500/10 px-4 py-3 text-sm text-brand-800 dark:text-brand-300">
             <Loader2 className="h-4 w-4 animate-spin" />
             {status}
           </div>
@@ -121,7 +121,7 @@ export function CreateCircle() {
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           {/* Name */}
           <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
               Circle Name
             </label>
             <input
@@ -130,7 +130,7 @@ export function CreateCircle() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Lagos Builders"
-              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+              className="mt-1 block w-full rounded-xl border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-500/40"
               disabled={busy}
             />
           </div>
@@ -138,7 +138,7 @@ export function CreateCircle() {
           {/* Size & Cycles */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="size" className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="size" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Group Size
               </label>
               <input
@@ -148,13 +148,13 @@ export function CreateCircle() {
                 max={50}
                 value={size}
                 onChange={(e) => setSize(e.target.value === "" ? 2 : Number(e.target.value))}
-                className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                className="mt-1 block w-full rounded-xl border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-500/40"
                 disabled={busy}
               />
-              <p className="mt-1 text-xs text-gray-400">2–50 members</p>
+              <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">2–50 members</p>
             </div>
             <div>
-              <label htmlFor="cycles" className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="cycles" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Rounds (Cycles)
               </label>
               <input
@@ -164,16 +164,16 @@ export function CreateCircle() {
                 max={size}
                 value={cycleCount}
                 onChange={(e) => setCycleCount(e.target.value === "" ? 1 : Number(e.target.value))}
-                className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                className="mt-1 block w-full rounded-xl border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-500/40"
                 disabled={busy}
               />
-              <p className="mt-1 text-xs text-gray-400">How many payout rounds</p>
+              <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">How many payout rounds</p>
             </div>
           </div>
 
           {/* Amount */}
           <div>
-            <label htmlFor="amount" className="block text-sm font-semibold text-gray-700">
+            <label htmlFor="amount" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
               Contribution per Round (XLM)
             </label>
             <input
@@ -184,17 +184,17 @@ export function CreateCircle() {
               step={0.1}
               value={amount}
               onChange={(e) => setAmount(e.target.value === "" ? 1 : Number(e.target.value))}
-              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+              className="mt-1 block w-full rounded-xl border border-gray-300 dark:border-gray-700 px-4 py-2.5 text-sm transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-500/40"
               disabled={busy}
             />
-            <p className="mt-1 text-xs text-gray-400">
+            <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
               Each member contributes this amount every round
             </p>
           </div>
 
           {/* Payout order */}
           <div>
-            <span className="block text-sm font-semibold text-gray-700">Payout Order</span>
+            <span className="block text-sm font-semibold text-gray-700 dark:text-gray-300">Payout Order</span>
             <div className="mt-2 flex gap-3">
               <button
                 type="button"
@@ -202,8 +202,8 @@ export function CreateCircle() {
                 className={cx(
                   "flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition",
                   !isRandom
-                    ? "border-brand-300 bg-brand-50 text-brand-700"
-                    : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                    ? "border-brand-300 bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300"
+                    : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/60"
                 )}
                 disabled={busy}
               >
@@ -215,8 +215,8 @@ export function CreateCircle() {
                 className={cx(
                   "flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition",
                   isRandom
-                    ? "border-brand-300 bg-brand-50 text-brand-700"
-                    : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                    ? "border-brand-300 bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300"
+                    : "border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/60"
                 )}
                 disabled={busy}
               >
@@ -226,8 +226,8 @@ export function CreateCircle() {
           </div>
 
           {/* Summary */}
-          <div className="rounded-xl bg-gray-50 p-4 text-sm text-gray-600">
-            <p className="font-semibold text-gray-800">Summary</p>
+          <div className="rounded-xl bg-gray-50 dark:bg-gray-950 p-4 text-sm text-gray-600 dark:text-gray-300">
+            <p className="font-semibold text-gray-800 dark:text-gray-100">Summary</p>
             <p className="mt-1">
               <strong>{name || "—"}</strong> · {size} members · {cycleCount} rounds ·{" "}
               <strong>{amount} XLM</strong> per round
@@ -240,7 +240,7 @@ export function CreateCircle() {
 
           {/* Submit */}
           {!address ? (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-center text-sm text-amber-700">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-500/10 p-4 text-center text-sm text-amber-700 dark:text-amber-300">
               Connect your wallet to create a circle.
             </div>
           ) : (

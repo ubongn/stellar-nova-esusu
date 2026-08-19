@@ -56,7 +56,7 @@ export function Dashboard() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             to="/create"
-            className="flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 shadow-card transition hover:bg-brand-50"
+            className="flex items-center gap-2 rounded-xl bg-white dark:bg-gray-900 px-5 py-2.5 text-sm font-semibold text-brand-700 dark:text-brand-300 shadow-card transition hover:bg-brand-50 dark:hover:bg-brand-500/15"
           >
             <PlusCircle className="h-4 w-4" /> Create Circle
           </Link>
@@ -73,10 +73,10 @@ export function Dashboard() {
         {/* Circles */}
         <div>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-900">All Circles</h2>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">All Circles</h2>
             <button
               onClick={load}
-              className="text-xs font-medium text-brand-600 hover:text-brand-700"
+              className="text-xs font-medium text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
             >
               Refresh
             </button>
@@ -85,8 +85,8 @@ export function Dashboard() {
           {loading ? (
             <FullSpinner label="Loading circles from the network…" />
           ) : circles.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 p-10 text-center">
-              <p className="text-sm text-gray-500">
+            <div className="rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 p-10 text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 No circles yet. Be the first to create one!
               </p>
               <Link

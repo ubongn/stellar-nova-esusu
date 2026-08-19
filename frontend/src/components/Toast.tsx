@@ -4,9 +4,9 @@ import { cn } from "../lib/utils";
 import type { ToastType } from "../lib/types";
 
 const STYLES: Record<ToastType, { bg: string; icon: typeof CheckIcon; ring: string }> = {
-  success: { bg: "bg-emerald-50 text-emerald-800", icon: CheckIcon, ring: "ring-emerald-200" },
-  error: { bg: "bg-red-50 text-red-800", icon: AlertIcon, ring: "ring-red-200" },
-  info: { bg: "bg-brand-50 text-brand-800", icon: InfoIcon, ring: "ring-brand-200" },
+  success: { bg: "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300", icon: CheckIcon, ring: "ring-emerald-200" },
+  error: { bg: "bg-red-50 dark:bg-red-500/10 text-red-800 dark:text-red-300", icon: AlertIcon, ring: "ring-red-200" },
+  info: { bg: "bg-brand-50 dark:bg-brand-500/10 text-brand-800 dark:text-brand-300", icon: InfoIcon, ring: "ring-brand-200" },
 };
 
 /** Fixed top-right toast stack. Mounted once at the app root. */

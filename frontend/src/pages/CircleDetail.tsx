@@ -62,10 +62,10 @@ export function CircleDetail() {
   if (!circle)
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <p className="text-gray-500">This circle could not be found.</p>
+        <p className="text-gray-500 dark:text-gray-400">This circle could not be found.</p>
         <Link
           to="/"
-          className="mt-4 inline-block text-sm font-medium text-brand-600"
+          className="mt-4 inline-block text-sm font-medium text-brand-600 dark:text-brand-400"
         >
           ← Back to dashboard
         </Link>
@@ -139,19 +139,19 @@ export function CircleDetail() {
     <div className="mx-auto max-w-5xl px-4 py-8">
       <Link
         to="/"
-        className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-brand-600"
+        className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-300"
       >
         <ArrowLeft className="h-4 w-4" /> Dashboard
       </Link>
 
       {/* Header card */}
-      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-card">
+      <div className="rounded-3xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-card">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-extrabold text-gray-900">
+            <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white">
               {config.name}
             </h1>
-            <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-gray-500">
+            <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
               <span className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
                 {members.length}/{config.size} members
@@ -173,7 +173,7 @@ export function CircleDetail() {
                   <UserPlus className="h-4 w-4" /> Join Circle
                 </Button>
               ) : (
-                <span className="text-sm text-amber-600">Connect wallet to join</span>
+                <span className="text-sm text-amber-600 dark:text-amber-400">Connect wallet to join</span>
               )
             )}
             {/* Contribute button: member + circle active */}
@@ -187,7 +187,7 @@ export function CircleDetail() {
             )}
             {/* Waiting for members */}
             {isMember && state === "Pending" && (
-              <span className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700">
+              <span className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-700 dark:text-amber-300">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 Waiting for {config.size - members.length} more member{config.size - members.length !== 1 ? "s" : ""}
               </span>
@@ -197,7 +197,7 @@ export function CircleDetail() {
               <button
                 onClick={handleClose}
                 disabled={closing}
-                className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+                className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 dark:bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-700 dark:text-red-300 transition hover:bg-red-100 dark:hover:bg-red-500/20 disabled:opacity-50"
               >
                 {closing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 Close Circle
@@ -205,7 +205,7 @@ export function CircleDetail() {
             )}
             {/* Closed badge */}
             {state === "Closed" && (
-              <span className="flex items-center gap-2 rounded-xl border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-500">
+              <span className="flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                 Circle closed
               </span>
             )}
@@ -218,11 +218,11 @@ export function CircleDetail() {
         </div>
 
         <div className="mt-5">
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>Progress</span>
             <span>{progress}%</span>
           </div>
-          <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-gray-100">
+          <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
             <div
               className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600"
               style={{ width: `${progress}%` }}
@@ -239,10 +239,10 @@ export function CircleDetail() {
           ].map((s) => (
             <div
               key={s.label}
-              className="rounded-xl border border-gray-100 bg-gray-50 p-3"
+              className="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 p-3"
             >
-              <p className="text-xs text-gray-400">{s.label}</p>
-              <p className="text-sm font-bold text-gray-900">{s.value}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">{s.label}</p>
+              <p className="text-sm font-bold text-gray-900 dark:text-white">{s.value}</p>
             </div>
           ))}
         </div>
@@ -251,8 +251,8 @@ export function CircleDetail() {
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_340px]">
         {/* Members & payout schedule */}
         <div className="space-y-6">
-          <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
-            <h2 className="text-base font-bold text-gray-900">Payout Schedule</h2>
+          <section className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-card">
+            <h2 className="text-base font-bold text-gray-900 dark:text-white">Payout Schedule</h2>
             <ol className="mt-3 space-y-2">
               {(payout_order.length ? payout_order : members).map(
                 (addr, i) => {
@@ -265,8 +265,8 @@ export function CircleDetail() {
                       className={cx(
                         "flex items-center justify-between rounded-xl border px-3 py-2.5",
                         isCurrent
-                          ? "border-brand-300 bg-brand-50"
-                          : "border-gray-100"
+                          ? "border-brand-300 bg-brand-50 dark:bg-brand-500/10"
+                          : "border-gray-100 dark:border-gray-800"
                       )}
                     >
                       <span className="flex items-center gap-3">
@@ -275,13 +275,13 @@ export function CircleDetail() {
                         ) : isCurrent ? (
                           <Crown className="h-5 w-5 text-amber-500" />
                         ) : (
-                          <Circle className="h-5 w-5 text-gray-300" />
+                          <Circle className="h-5 w-5 text-gray-300 dark:text-gray-600" />
                         )}
-                        <span className="text-sm font-medium text-gray-800">
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
                           Round {i + 1}
                         </span>
                       </span>
-                      <span className="font-mono text-sm text-gray-600">
+                      <span className="font-mono text-sm text-gray-600 dark:text-gray-300">
                         {addr === address ? "You" : shortAddr(addr)}
                       </span>
                     </li>
@@ -289,15 +289,15 @@ export function CircleDetail() {
                 }
               )}
               {members.length === 0 && (
-                <li className="py-4 text-center text-sm text-gray-400">
+                <li className="py-4 text-center text-sm text-gray-400 dark:text-gray-500">
                   No members yet.
                 </li>
               )}
             </ol>
           </section>
 
-          <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
-            <h2 className="text-base font-bold text-gray-900">Members</h2>
+          <section className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-card">
+            <h2 className="text-base font-bold text-gray-900 dark:text-white">Members</h2>
             <ul className="mt-3 divide-y divide-gray-100">
               {members.map((addr, i) => (
                 <li
@@ -305,20 +305,20 @@ export function CircleDetail() {
                   className="flex items-center justify-between py-2.5"
                 >
                   <span className="flex items-center gap-2 text-sm">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 dark:bg-brand-500/15 text-xs font-bold text-brand-700 dark:text-brand-300">
                       {i + 1}
                     </span>
-                    <span className="font-mono text-gray-700">
+                    <span className="font-mono text-gray-700 dark:text-gray-300">
                       {shortAddr(addr, 5, 5)}
                     </span>
                   </span>
                   {addr === address && (
-                    <span className="rounded-md bg-brand-50 px-2 py-0.5 text-xs font-medium text-brand-700">
+                    <span className="rounded-md bg-brand-50 dark:bg-brand-500/10 px-2 py-0.5 text-xs font-medium text-brand-700 dark:text-brand-300">
                       You
                     </span>
                   )}
                   {addr === config.creator && (
-                    <span className="rounded-md bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+                    <span className="rounded-md bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-300">
                       Creator
                     </span>
                   )}
@@ -326,7 +326,7 @@ export function CircleDetail() {
               ))}
             </ul>
             {yourPosition >= 0 && (
-              <p className="mt-3 rounded-lg bg-brand-50 px-3 py-2 text-xs text-brand-700">
+              <p className="mt-3 rounded-lg bg-brand-50 dark:bg-brand-500/10 px-3 py-2 text-xs text-brand-700 dark:text-brand-300">
                 You are member #{yourPosition + 1}.
               </p>
             )}
