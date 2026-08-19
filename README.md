@@ -209,6 +209,7 @@ Every round of user feedback produces a shipped improvement. Here's what changed
 
 | User Feedback | Improvement Shipped | Commit |
 |---|---|---|
+| "The platform concept is a bit hard to grasp for first-time users" — [Mustafa Çolak](https://github.com/mustafaColak0), feedback form | Full onboarding layer: first-visit 4-step welcome modal (with wallet-connect CTA + friendbot faucet link), permanent How-it-works section on the dashboard, Guide link in the nav to re-open anytime | [`ec228e0`](https://github.com/ubongn/stellar-nova-esusu/commit/ec228e0) |
 | "Dark theme plsssss" — Nomet, external tester (feedback form) | Full dark mode: class-based theme across every surface, header toggle (sun/moon), persisted choice, OS-preference default, zero-flash pre-paint script | [`738684d`](https://github.com/ubongn/stellar-nova-esusu/commit/738684d) |
 | Navbar felt heavy in dark mode | Transparent navbar at rest, elevated surface + shadow on scroll | [`3ebbb2d`](https://github.com/ubongn/stellar-nova-esusu/commit/3ebbb2d) |
 | "Once a transaction is confirmed, the modal should close / button stay disabled" — Ubong (dogfooding) | Contribute modal locks after on-chain confirmation + auto-closes after showing success state; only a failed tx re-enables retry | [`5943537`](https://github.com/ubongn/stellar-nova-esusu/commit/5943537) |
