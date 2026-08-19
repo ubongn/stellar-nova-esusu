@@ -93,14 +93,14 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 
 **6 external testers have interacted with the contract so far** — each via their own wallet, no seeding from us. Every create, join, contribution, and payout is public and verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
 
-| # | Tester | Wallet | First seen | On-chain activity | Feedback |
-|---|---|---|---|---|---|
-| 1 | narrivex | `GCDLL…7R2M` | Aug 17 | created circles | — |
-| 2 | [Mustafa Çolak](https://github.com/mustafaColak0) | `GBUJ…V7LN` | Aug 17 | joined + contributed, circle owner | ✅ 5/5 |
-| 3 | Nomet | `GA35…63GO` | Aug 18 | joined circle #7, created circle #13, received its first payout | ✅ 5/5 |
-| 4 | Vansh Dhiwar | `GC4L…EMZJ` | Aug 18 | created circle #14 | ✅ 5/5 |
-| 5 | Blingz Kim | `GA7Y…QHYW` | Aug 17 | joined circles #6/#12/#14, received the contract's **first-ever payout**, contributed Round 2 | ✅ 5/5 |
-| 6 | Blessing Blingz | `GA2U…KW4S` | Aug 19 | joined circle #10 after pushing through two UX blockers — both fixed mid-session | — |
+| Wallet | On-chain activity | Feedback |
+|---|---|---|
+| `GCDLL…7R2M` | created circles | — |
+| `GBUJ…V7LN` | joined + contributed, circle owner | ✅ 5/5 |
+| `GA35…63GO` | joined circle #7, created circle #13, received its first payout | ✅ 5/5 |
+| `GC4L…EMZJ` | created circle #14 | ✅ 5/5 |
+| `GA7Y…QHYW` | joined circles #6/#12/#14, received the contract's **first-ever payout**, contributed Round 2 | ✅ 5/5 |
+| `GA2U…KW4S` | joined circle #10 after pushing through two UX blockers — both fixed mid-session | — |
 
 ## Features
 
