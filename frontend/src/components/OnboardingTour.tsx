@@ -64,6 +64,12 @@ export function OnboardingTour() {
     setOpen(false);
   };
 
+  // Deep-link friendbot straight to the connected wallet — one click funds it,
+  // no address form to paste into (raw 400s from friendbot confused testers).
+  const friendbotUrl = address
+    ? `https://friendbot.stellar.org/?addr=${address}`
+    : "https://friendbot.stellar.org";
+
   if (!open) return null;
 
   return (
@@ -145,12 +151,15 @@ export function OnboardingTour() {
           )}
           <div className="flex items-center justify-between">
             <a
-              href="https://friendbot.stellar.org"
+              href={friendbotUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 transition hover:text-brand-600 dark:text-gray-400 dark:hover:text-brand-300"
             >
-              Get free testnet XLM <ExternalLink className="h-3 w-3" />
+              {address
+                ? "Fund this wallet — free testnet XLM"
+                : "Get free testnet XLM"}{" "}
+              <ExternalLink className="h-3 w-3" />
             </a>
             <button
               onClick={close}
