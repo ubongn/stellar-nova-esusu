@@ -91,7 +91,7 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 |---|---|
 | ![Circle 6 active](screenshots/users/circle-6-active-3of3.png) | ![Contract activity](screenshots/users/stellar-expert-contract-activity.png) |
 
-**Distinct wallets that have interacted with the contract: 7 total — 5 external testers** (narrivex, Mustafa Çolak, Nomet, Vansh Dhiwar, blingzkim — each joined, contributed, and/or created circles via their own wallets; the contract's **first-ever payout went to an external tester**, and 2 of them also submitted written feedback via the [form](#user-feedback)). Verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI) — every create, join, contribution, and payout is public on-chain.
+**Distinct wallets that have interacted with the contract: 8 total — 6 external testers** (narrivex, Mustafa Çolak, Nomet, Vansh Dhiwar, Blingz Kim, and a tester who joined via Microsoft Edge). Each joined, contributed, and/or created circles via their own wallets; the contract's **first-ever payout went to an external tester**, and 3 of them also submitted written feedback via the [form](#user-feedback). Verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI) — every create, join, contribution, and payout is public on-chain.
 
 ## Features
 
