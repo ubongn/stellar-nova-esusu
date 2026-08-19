@@ -4,6 +4,7 @@ import { Wallet, Zap, Menu, X } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
 import { Spinner } from "./Spinner";
 import { ThemeToggle } from "./ThemeToggle";
+import { openOnboarding } from "./OnboardingTour";
 import { shortAddr, cx } from "@/lib/utils";
 
 function GithubIcon({ className }: { className?: string }) {
@@ -38,6 +39,17 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     "rounded-lg px-3 py-1.5 text-sm font-medium transition",
     isActive ? "bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-300" : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/60"
   );
+
+function GuideLink() {
+  return (
+    <button
+      onClick={openOnboarding}
+      className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700/60 dark:hover:text-white"
+    >
+      Guide
+    </button>
+  );
+}
 
 export function Header() {
   const { address, connect, connecting, disconnect } = useWallet();
@@ -80,6 +92,7 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
+            <GuideLink />
           </nav>
         </div>
 
@@ -178,6 +191,12 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
+            <button
+              onClick={() => { handleNavClick(); openOnboarding(); }}
+              className="rounded-lg px-3 py-2.5 text-left text-sm font-medium text-gray-600 transition hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800/60 dark:hover:text-white"
+            >
+              Guide
+            </button>
             <a
               href="https://github.com/ubongn/stellar-nova-esusu"
               target="_blank"

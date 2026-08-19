@@ -4,6 +4,7 @@ import { PlusCircle, LogIn, Sparkles } from "lucide-react";
 import { CircleCard } from "@/components/CircleCard";
 import { WalletCard } from "@/components/WalletCard";
 import { LiveEventFeed } from "@/components/LiveEventFeed";
+import { HowItWorks } from "@/components/HowItWorks";
 import { FullSpinner } from "@/components/Spinner";
 import { getAllCircles } from "@/lib/contract";
 import type { CircleInfo } from "@/lib/types";
@@ -68,6 +69,8 @@ export function Dashboard() {
           </Link>
         </div>
       </section>
+
+      <HowItWorks />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Circles */}

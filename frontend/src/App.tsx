@@ -3,6 +3,7 @@ import { ToastProvider } from "@/context/ToastContext";
 import { WalletProvider } from "@/context/WalletContext";
 import { Header } from "@/components/Header";
 import { Toaster } from "@/components/Toaster";
+import { OnboardingTour } from "@/components/OnboardingTour";
 import { Dashboard } from "@/pages/Dashboard";
 import { CircleDetail } from "@/pages/CircleDetail";
 import { CreateCircle } from "@/pages/CreateCircle";
@@ -24,6 +25,7 @@ export default function App() {
               </Routes>
             </main>
             <Toaster />
+            <OnboardingTour />
           </div>
         </BrowserRouter>
       </WalletProvider>
