@@ -100,7 +100,7 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 | `GA35…63GO` | joined circle #7, created circle #13, received its first payout | ✅ 5/5 |
 | `GC4L…EMZJ` | created circle #14 | ✅ 5/5 |
 | `GA7Y…QHYW` | joined circles #6/#12/#14, received the contract's **first-ever payout**, contributed Round 2 | ✅ 5/5 |
-| `GA2U…KW4S` | joined circle #10 after pushing through two UX blockers — both fixed mid-session | — |
+| `GA2U…KW4S` | joined circle #10 after pushing through two UX blockers — both fixed mid-session | ✅ 5/5 |
 
 ## Features
 
@@ -206,7 +206,7 @@ We collect user feedback via Google Forms — name, email, wallet address, and p
 
 ### Collected Responses (Excel)
 
-📥 **[Download all feedback responses (.xlsx)](docs/feedback/nova-esusu-feedback-2026-08-19.xlsx)** — 4 responses to date.
+📥 **[Download all feedback responses (.xlsx)](docs/feedback/nova-esusu-feedback-2026-08-19.xlsx)** — 5 responses to date.
 
 **Results snapshot:** every tester rated **5/5** across all categories — wallet connection ease, transaction speed, and escrow security. Zero bugs reported by testers. Feature requests received: dark theme (shipped), interactive onboarding guide (shipped), auto-contribute, payout-turn notifications, savings-history dashboard, CSV transaction export.
 
