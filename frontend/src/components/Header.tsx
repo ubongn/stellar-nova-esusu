@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Wallet, Zap, Menu, X } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
@@ -42,13 +42,29 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 export function Header() {
   const { address, connect, connecting, disconnect } = useWallet();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  // Elevate the navbar once the page scrolls: solid surface + shadow.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Close mobile menu on navigation
   const handleNavClick = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/80 backdrop-blur">
+    <header
+      className={cx(
+        "sticky top-0 z-40 border-b transition-colors duration-200",
+        scrolled
+          ? "border-gray-200 bg-white/95 shadow-card backdrop-blur dark:border-gray-800 dark:bg-gray-900/95"
+          : "border-transparent bg-transparent dark:border-transparent"
+      )}
+    >
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16">
         {/* Left: Logo + Desktop nav */}
         <div className="flex items-center gap-4 sm:gap-6">
@@ -138,7 +154,12 @@ export function Header() {
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 pb-4 pt-2 sm:hidden">
+        <div
+          className={cx(
+            "border-t bg-white px-4 pb-4 pt-2 dark:bg-gray-900 sm:hidden",
+            scrolled ? "border-gray-100 dark:border-gray-800" : "border-transparent dark:border-transparent"
+          )}
+        >
           {/* Nav links */}
           <nav className="flex flex-col gap-1">
             {NAV_ITEMS.map((item) => (
