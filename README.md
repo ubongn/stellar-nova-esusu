@@ -4,6 +4,8 @@
 
 Nova Esusu brings the centuries-old African rotating savings system (Esusu / Ajo / Adashe) on-chain. Members contribute XLM into a shared pool each round, and one member receives the full pot on a rotating basis — all enforced by smart contracts, with zero intermediaries.
 
+🎥 **[Watch the demo video](https://drive.google.com/file/d/13QS_LDAaQnSwsa3NChTEeOV37kr27eCk/view?usp=sharing)** — full lifecycle: connect wallet → fund → create circle → join → contribute → payout rotation → dark mode → onboarding guide.
+
 ## Why Esusu?
 
 40+ million Africans participate in rotating savings groups (Esusu in Nigeria, Ajo in Ghana, Stokvel in South Africa). These informal systems suffer from:
