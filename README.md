@@ -93,7 +93,7 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 |---|---|
 | ![Circle 6 active](screenshots/users/circle-6-active-3of3.png) | ![Contract activity](screenshots/users/stellar-expert-contract-activity.png) |
 
-**6 external testers have interacted with the contract so far** — each via their own wallet, no seeding from us. Every create, join, contribution, and payout is public and verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
+**7 external testers have interacted with the contract so far** — each via their own wallet, no seeding from us. Every create, join, contribution, and payout is public and verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
 
 | Wallet | On-chain activity | Feedback |
 |---|---|---|
@@ -101,8 +101,9 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 | `GBUJ…V7LN` | joined + contributed, circle owner | ✅ 5/5 |
 | `GA35…63GO` | joined circle #7, created circle #13, received its first payout | ✅ 5/5 |
 | `GC4L…EMZJ` | created circle #14 | ✅ 5/5 |
-| `GA7Y…QHYW` | joined circles #6/#12/#14, received the contract's **first-ever payout**, contributed Round 2 | ✅ 5/5 |
+| `GA7Y…QHYW` | joined circles #6/#12/#14, received the contract's **first-ever payout**, contributed Round 2; now creates open circles for new testers | ✅ 5/5 |
 | `GA2U…KW4S` | joined circle #10 after pushing through two UX blockers — both fixed mid-session | ✅ 5/5 |
+| `GAHE…WCXG` | joined circle #15 (created by a fellow tester) | — |
 
 ## Features
 
