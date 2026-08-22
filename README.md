@@ -99,7 +99,7 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 |---|
 | ![Contract activity Aug 21](screenshots/users/stellar-expert-contract-activity-aug21.png) |
 
-**10 external testers have interacted with the contract so far** — each via their own wallet, no seeding from us. Every create, join, contribution, and payout is public and verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
+**11 external testers have interacted with the contract so far** — each via their own wallet, no seeding from us. Every create, join, contribution, and payout is public and verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CACYGZA4BTSU5EZZKFL5XFPS2SBRSRCMXPGIB54Q4LZDVOD4SF2WWSCI).
 
 | Wallet | On-chain activity | Feedback |
 |---|---|---|
@@ -113,6 +113,7 @@ Circle #6 "Open Circle" — created with 2 seed members and 1 open slot, filled 
 | `GBRV…TDUD` | joined circle #15 — second tester recruited via tester-created circles within 2 hours | — |
 | `GBMO…BT7K` | joined circle #7 and contributed 5 XLM within 20 seconds | — |
 | `GAWD…AMI5` | joined circle #14 (created by another tester) | — |
+| `GDKS…7NCY` | created circle #17 "Circling the Savings!" — first external user to create a circle unassisted, unprompted | — |
 
 ## Features
 
